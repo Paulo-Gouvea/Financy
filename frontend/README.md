@@ -47,11 +47,13 @@ Além disso, também temos algumas regras importantes específicas para o front-
 
 ## Páginas
 
-Essa aplicação possui 6 páginas e dois modais com os formulários (Dialog):
+Essa aplicação possui: 
+- [ ] 6 páginas 
+- [ ] dois modais com os formulários (Dialog):
 
-- A página raiz (`/`) que exibe:
-    - Tela de login caso o usuário esteja deslogado
-    - Tela dashboard caso usuário esteja logado
+[ ] A página raiz (`/`) que exibe:
+[ ] Tela de login caso o usuário esteja deslogado
+[ ] Tela dashboard caso usuário esteja logado
 
 ## Ferramentas
 
@@ -66,10 +68,9 @@ Essa aplicação possui 6 páginas e dois modais com os formulários (Dialog):
 
 Todo projeto tem diversas configurações de variáveis que devem ser diferentes de acordo com o ambiente que ele é executado. Para isso, importante sabermos, de forma fácil e intuitiva, quais variáveis são essas. Então é obrigatório que esse projeto tenha um arquivo `.env.example` com as chaves necessárias.
 
-- VITE_BACKEND_URL=
+- [ ] VITE_BACKEND_URL=
 
 ## Dicas
 
-- Comece o projeto pela aba `Style Guide` no Figma. Dessa forma, você prepara todo o seu tema, fontes e componentes e quando for criar as páginas vai ser bem mais tranquilo;
-- Assim com a experiência do usuário é importante (UX), a sua experiência no desenvolvimento (DX) também é muito importante. Por isso, apesar de ser possível criar essa aplicação sem nenhuma biblioteca, recomendamos utilizar algumas bibliotecas que vão facilitar tanto o desenvolvimento inicial quanto a manutenção do código;
-- Em caso de dúvidas, utilize o espaço da comunidade e do nosso fórum para interagir com outros alunos/instrutores e encontrar uma solução que funcione para você.
+- [ ] Comece o projeto pela aba `Style Guide` no Figma. Dessa forma, você prepara todo o seu tema, fontes e componentes e quando for criar as páginas vai ser bem mais tranquilo;
+
