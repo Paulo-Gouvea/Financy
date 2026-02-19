@@ -1,0 +1,75 @@
+## Funcionalidade e regras
+
+- [ ]  O usuário pode criar uma conta e fazer login
+- [ ]  O usuário pode ser capaz de alterar o seu nome 
+- [ ]  O usuário pode ver e gerenciar apenas as categorias e transações criadas por ele
+- [ ]  Deve ser possível criar uma transação
+- [ ]  Deve ser possível deletar uma transação
+- [ ]  Deve ser possível editar uma transação
+- [ ]  Deve ser possível listar todas as transações
+- [ ]  Deve ser possível listar todas as transações de um usuário especifico
+- [ ]  Deve ser possível criar uma categoria
+- [ ]  Deve ser possível deletar uma categoria
+- [ ]  Deve ser possível editar uma categoria
+- [ ]  Deve ser possível listar todas as categorias
+- [ ]  Deve ser possível listar todas as categorias de um usuário especifico
+
+## Funcionalidades para o front-end
+# Tela Dashboard
+
+- [ ]  Deve ser apresentado o saldo total do usuário
+- [ ]  Deve ser apresentado a receita do mês do usuário
+- [ ]  Deve ser apresentado a despesa do mês do usuário
+- [ ]  Deve ser apresentado as 5 transações mais recentes (pelo SelectedDate) na pagina inicial  (POSSO USAR O FILTERTRANSACTIONS MAS LIMITANDO NOS 5 PRIMEIROS REGISTROS!)
+- [ ]  Deve ser possivel falar qual o saldo total de uma categoria
+- [ ]  Deve ser possivel falar a quantidade de transações de cada categoria
+- [ ]  Deve ser possivel apresentar na tela inicial uma lista com 5 categorias com saldo negativo (PODEMOS FAZER UMA LISTA DOS BALANCES NEGATIVOS USANDO A FUNÇÃO QUE APRESENTA OS SALDOS DAS CATEGORIAS!)
+
+# Tela Transações
+- [ ]  Deve ser possivel fazer uma filtragem pela descrição da transação
+- [ ]  Deve ser possivel fazer uma filtragem pelo tipo da transação
+- [ ]  Deve ser possível fazer uma filtragem pela categoria da transação
+- [ ]  Deve ser possível fazer uma filtragem pelo período da transação
+- [ ]  Deve ser apresentado uma tabela com as transações ordenadas pela selectedDate. Deve permitir paginação
+- [ ]  Deve ser apresentado o total das transações coletadas no filtro 
+
+# Tela Categorias
+- [ ]  Deve ser possivel mostrar o total de categorias
+- [ ]  Deve ser possivel mostrar o total de transações
+- [ ]  Deve ser possivel mostrar a categoria com mais transações
+- [ ]  Deve ser possivel mostrar o total de transações em cada categoria
+- [ ]  Deve ser possivel mostrar as categorias criadas (não tem uma paginação então pode colocar um scroll)
+
+Além disso, também temos algumas regras importantes específicas para o front-end:
+
+- [ ]  É obrigatória a criação de uma aplicação React usando GraphQL para consultas na API e Vite como `bundler`;
+- [ ]  Siga o mais fielmente possível o layout do Figma;
+
+## Páginas
+
+Essa aplicação possui 6 páginas e dois modais com os formulários (Dialog):
+
+- A página raiz (`/`) que exibe:
+    - Tela de login caso o usuário esteja deslogado
+    - Tela dashboard caso usuário esteja logado
+
+## Ferramentas
+
+É obrigatório o uso de:
+
+- [ ] TypeScript
+- [ ] React
+- [ ] Vite sem framework
+- [ ] Graphql
+
+## Variáveis ambiente
+
+Todo projeto tem diversas configurações de variáveis que devem ser diferentes de acordo com o ambiente que ele é executado. Para isso, importante sabermos, de forma fácil e intuitiva, quais variáveis são essas. Então é obrigatório que esse projeto tenha um arquivo `.env.example` com as chaves necessárias.
+
+- VITE_BACKEND_URL=
+
+## Dicas
+
+- Comece o projeto pela aba `Style Guide` no Figma. Dessa forma, você prepara todo o seu tema, fontes e componentes e quando for criar as páginas vai ser bem mais tranquilo;
+- Assim com a experiência do usuário é importante (UX), a sua experiência no desenvolvimento (DX) também é muito importante. Por isso, apesar de ser possível criar essa aplicação sem nenhuma biblioteca, recomendamos utilizar algumas bibliotecas que vão facilitar tanto o desenvolvimento inicial quanto a manutenção do código;
+- Em caso de dúvidas, utilize o espaço da comunidade e do nosso fórum para interagir com outros alunos/instrutores e encontrar uma solução que funcione para você.
