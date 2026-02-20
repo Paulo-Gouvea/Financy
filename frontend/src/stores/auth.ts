@@ -27,6 +27,7 @@ interface AuthState{
     isAuthenticated: boolean
     signup: (data: RegisterInput) => Promise<boolean> 
     login: (data: LoginInput) => Promise<boolean> 
+    logout: () => void
 }
 
 export const useAuthStore = create<AuthState>() (
@@ -106,6 +107,15 @@ export const useAuthStore = create<AuthState>() (
                     console.log(error)
                     throw error
                 }
+            },
+            logout: () => {
+                set({
+                    user:null,
+                    token: null,
+                    isAuthenticated: false
+                })
+                
+                apolloClient.clearStore()
             }
         }), {
             name: 'financy-auth-storage'
