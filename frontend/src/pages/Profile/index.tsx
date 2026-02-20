@@ -6,17 +6,61 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/auth";
+import { useMutation } from "@apollo/client/react"
+import type { User as UserType } from "../../types"
+import { UPDATE_USERNAME } from "@/lib/graphql/mutations/UpdateUserName";
+import { toast } from "sonner";
 
 export function Profile(){
-    const { user, logout } = useAuthStore()
+    const { user, logout, setUser } = useAuthStore()
     const navigate = useNavigate()
 
     const [name, setName] = useState(user?.name)
     const [loading, setLoading] = useState(false)
 
+    type UpdateUserNameMutationData = { updateUserName: UserType }
+    type UpdateUserNameVariables = {
+        id: string,
+        data: {
+            name?: string
+        }
+    }
+
+    const [updateUserMutation] = useMutation<
+        UpdateUserNameMutationData,
+        UpdateUserNameVariables
+    >(UPDATE_USERNAME, {
+        onCompleted: (res: UpdateUserNameMutationData) => {
+            console.log('res ==> ' +JSON.stringify(res))
+            const updatedUser = res.updateUserName
+            setUser(updatedUser)
+            setName(updatedUser.name)
+        }
+    })
+
     const handleSubmit = async (e: React.SubmitEvent) => {  
         e.preventDefault()
         setLoading(true)
+
+        if(!user) return
+
+        try {
+            await updateUserMutation({
+                variables: {
+                    id: user.id,
+                    data: {
+                        name
+                    }
+                }
+            })
+
+            toast.success("Mudança de nome realizada com sucesso!")
+        } catch (error) {
+            toast.error("Erro ao atualizar o nome do usuário!")
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
     }
 
     const handleLogout = () => {

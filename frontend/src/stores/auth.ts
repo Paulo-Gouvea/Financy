@@ -28,6 +28,7 @@ interface AuthState{
     signup: (data: RegisterInput) => Promise<boolean> 
     login: (data: LoginInput) => Promise<boolean> 
     logout: () => void
+    setUser: (user: User) => void
 }
 
 export const useAuthStore = create<AuthState>() (
@@ -36,6 +37,13 @@ export const useAuthStore = create<AuthState>() (
             user: null,
             token: null,
             isAuthenticated: false,
+            setUser: (user: User) =>
+                set((state) => ({
+                    user: {
+                        ...state.user, 
+                        ...user
+                    }
+                })),
             login: async (loginData: LoginInput) => {
                 try {
                     const { data } = await apolloClient.mutate<LoginMutationData, { data: LoginInput }>({

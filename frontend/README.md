@@ -1,7 +1,7 @@
 ## Funcionalidade e regras
 
-- [ ]  O usuário pode criar uma conta e fazer login
-- [ ]  O usuário pode ser capaz de alterar o seu nome 
+- [X]  O usuário pode criar uma conta e fazer login
+- [X]  O usuário pode ser capaz de alterar o seu nome 
 - [ ]  O usuário pode ver e gerenciar apenas as categorias e transações criadas por ele
 - [ ]  Deve ser possível criar uma transação
 - [ ]  Deve ser possível deletar uma transação
@@ -59,10 +59,10 @@ Essa aplicação possui:
 
 É obrigatório o uso de:
 
-- [ ] TypeScript
-- [ ] React
-- [ ] Vite sem framework
-- [ ] Graphql
+- [X] TypeScript
+- [X] React
+- [X] Vite sem framework
+- [X] Graphql
 
 ## Variáveis ambiente
 
@@ -72,5 +72,5 @@ Todo projeto tem diversas configurações de variáveis que devem ser diferentes
 
 ## Dicas
 
-- [ ] Comece o projeto pela aba `Style Guide` no Figma. Dessa forma, você prepara todo o seu tema, fontes e componentes e quando for criar as páginas vai ser bem mais tranquilo;
+- [X] Comece o projeto pela aba `Style Guide` no Figma. Dessa forma, você prepara todo o seu tema, fontes e componentes e quando for criar as páginas vai ser bem mais tranquilo;
 
