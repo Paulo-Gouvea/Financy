@@ -1,8 +1,60 @@
 import { PageDescription } from "@/components/PageDescription";
 import { CategoryStatisticsCards } from "./components/CategoryStatisticsCard";
-import { Tag, ArrowUpDown } from "lucide-react"
+import { Tag, ArrowUpDown, ForkKnife } from "lucide-react"
+import { CategoryCard } from "./components/CategoryCard";
 
 export function Categories(){
+    const categories = [
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+        {
+            title: "Alimentação",
+            description: "Restaurante, delivery e refeições",
+            count: 12,
+            icon: "forkknife",
+        },
+    ]
+
     return (
         <>
             <PageDescription 
@@ -32,7 +84,19 @@ export function Categories(){
                 />
             </div>
 
-            
+            <div className="mt-10 grid grid-cols-4 gap-10">
+                {
+                    categories.map((category, index) => (
+                        <CategoryCard 
+                            key={index}
+                            title={category.title}
+                            description={category.description}
+                            count={category.count}
+                            icon={<ForkKnife className="w-5"/>}
+                        />
+                    ))
+                }
+            </div>
         </>
     )
 }

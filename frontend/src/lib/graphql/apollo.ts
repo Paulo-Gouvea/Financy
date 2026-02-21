@@ -8,7 +8,7 @@ const httpLink = new HttpLink({
 
 const authLink = new SetContextLink((prevContext) => {
   const token = useAuthStore.getState().token
-  //console.log('token === ' +token)
+  console.log('token === ' +token)
   return {
     headers: {
       ...prevContext.headers,
