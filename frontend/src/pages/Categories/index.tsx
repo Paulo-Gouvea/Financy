@@ -2,13 +2,21 @@ import { PageDescription } from "@/components/PageDescription";
 import { CategoryStatisticsCards } from "./components/CategoryStatisticsCard";
 import { Tag, ArrowUpDown } from "lucide-react"
 import { CategoryCard } from "./components/CategoryCard";
-import { DesiredIcon } from "@/components/desiredIcon";
+import { DesiredIcon } from "@/components/DesiredIcon";
 import { LIST_CATEGORIES, COUNT_CATEGORIES, GET_CATEGORIES_WITH_THE_MOST_TRANSACTIONS } from "@/lib/graphql/queries/categories";
 import { COUNT_TRANSACTIONS } from "@/lib/graphql/queries/transactions"; 
 import { useQuery } from "@apollo/client/react";
 import type { Category } from "@/types";
+import { CreateCategoryModal } from "@/pages/Categories/components/CreateCategoryModal";
+import { useState } from "react";
 
 export function Categories(){
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newCategoryTitle, setNewCategoryTitle] = useState(''); 
+    const [newCategoryDescription, setNewCategoryDescription] = useState(''); 
+    const [newCategoryIcon, setNewCategoryIcon] = useState('BriefcaseBusiness')
+    const [newCategoryColor, setNewCategoryColor] = useState('green')
+
     const { data: categoriesData } = useQuery<{listCategoriesFromOwner: Category[] }>(LIST_CATEGORIES)
     const { data: categoriesTotal } = useQuery<{countCategoriesFromOwner: number }>(COUNT_CATEGORIES)
     const { data: transactionsTotal } = useQuery<{countTransactionsFromOwner: number }>(COUNT_TRANSACTIONS)
@@ -19,15 +27,31 @@ export function Categories(){
     const totalOfTransactions = transactionsTotal?.countTransactionsFromOwner ?? 0
     const desiredCategory = categoryWithTheMostTransactions?.getCategoryWithTheMostTransactions 
 
-    console.log('desiredCategory ===> ' +JSON.stringify(desiredCategory))
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
 
     return (
         <>
+            <CreateCategoryModal 
+                open={isModalOpen}
+                setOpen={setIsModalOpen}
+                title="Nova categoria"
+                categoryTitle={newCategoryTitle}
+                setCategoryTitle={setNewCategoryTitle}
+                categoryDescription={newCategoryDescription}
+                setCategoryDescription={setNewCategoryDescription}
+                description="Organize suas transações com categorias"
+                selectedIcon={newCategoryIcon}
+                setSelectedIcon={setNewCategoryIcon}
+                selectedColor={newCategoryColor}
+                setSelectedColor={setNewCategoryColor}
+            />
             <PageDescription 
                 title="Categorias"
                 description="Organize suas transações por categorias"
                 buttonTitle="Nova categoria"
-                onClick={() => console.log()}
+                onClick={handleOpenModal}
             />
 
             <div className="w-full mt-8 flex justify-between">

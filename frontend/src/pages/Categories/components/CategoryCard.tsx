@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Trash, SquarePen } from "lucide-react"
-import { colors } from "@/lib/utils/utils"
+import { colors } from "@/lib/utils"
 
 type CategoryCardProps = {
   title: string

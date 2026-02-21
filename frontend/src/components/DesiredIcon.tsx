@@ -1,4 +1,4 @@
-import { colors } from "@/lib/utils/utils";
+import { colors } from "@/lib/utils";
 import { 
     BriefcaseBusiness, 
     CarFront, 

@@ -21,7 +21,7 @@ export function PageDescription({
                 <p className="text-gray-600">{description}</p>
             </div>
 
-            <Button>
+            <Button onClick={onClick} >
                 <PlusIcon />
                 {buttonTitle}
             </Button>
