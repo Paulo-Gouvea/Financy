@@ -9,9 +9,9 @@
 - [ ]  Deve ser possível listar todas as transações
 - [ ]  Deve ser possível listar todas as transações de um usuário especifico
 - [X]  Deve ser possível criar uma categoria
-- [ ]  Deve ser possível deletar uma categoria
+- [X]  Deve ser possível deletar uma categoria
 - [ ]  Deve ser possível editar uma categoria
-- [ ]  Deve ser possível listar todas as categorias
+- [X]  Deve ser possível listar todas as categorias
 - [X]  Deve ser possível listar todas as categorias de um usuário especifico
 
 ## Funcionalidades para o front-end

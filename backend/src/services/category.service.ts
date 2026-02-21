@@ -50,7 +50,7 @@ export class CategoryService {
                 outcomesList.find(t => t.categoryId === category.id)?._sum.valueInCents ?? 0
 
             return {
-                categoryId: category.id,
+                id: category.id,
                 ownerId: category.ownerId,
                 title: category.title,
                 description: category.description,

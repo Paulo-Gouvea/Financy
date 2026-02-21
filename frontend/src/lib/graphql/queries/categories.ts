@@ -3,6 +3,7 @@ import { gql } from "@apollo/client"
 export const LIST_CATEGORIES = gql`
     query ListCategoriesFromOwner{
         listCategoriesFromOwner {
+            id,
             title,
             description,
             icon, 

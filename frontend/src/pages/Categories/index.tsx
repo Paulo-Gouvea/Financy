@@ -5,10 +5,12 @@ import { CategoryCard } from "./components/CategoryCard";
 import { DesiredIcon } from "@/components/DesiredIcon";
 import { LIST_CATEGORIES, COUNT_CATEGORIES, GET_CATEGORIES_WITH_THE_MOST_TRANSACTIONS } from "@/lib/graphql/queries/categories";
 import { COUNT_TRANSACTIONS } from "@/lib/graphql/queries/transactions"; 
-import { useQuery } from "@apollo/client/react";
+import { useMutation, useQuery } from "@apollo/client/react";
 import type { Category } from "@/types";
 import { CreateCategoryModal } from "@/pages/Categories/components/CreateCategoryModal";
 import { useState } from "react";
+import { DELETE_CATEGORY } from "@/lib/graphql/mutations/category";
+import { toast } from "sonner";
 
 export function Categories(){
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,8 +29,43 @@ export function Categories(){
     const totalOfTransactions = transactionsTotal?.countTransactionsFromOwner ?? 0
     const desiredCategory = categoryWithTheMostTransactions?.getCategoryWithTheMostTransactions 
 
+    type DeleteCategoryMutationData = { deleteCategory: boolean }
+    type DeleteCategoryVariables = {
+        deleteCategoryId: string,
+    }
+
+    const [delecteCategoryMutation] = useMutation<
+        DeleteCategoryMutationData,
+        DeleteCategoryVariables
+    >(DELETE_CATEGORY, {
+        onCompleted: (res: DeleteCategoryMutationData) => {
+            const deletedCategoryResponse = res.deleteCategory
+            console.log(deletedCategoryResponse)
+        },
+        refetchQueries: [
+            { query: LIST_CATEGORIES },
+            { query: COUNT_CATEGORIES }
+        ],
+        awaitRefetchQueries: true
+    })
+
     const handleOpenModal = () => {
         setIsModalOpen(true)
+    }
+
+    const handleDeleteCategory = async (categoryId: string) => {
+        try {
+            await delecteCategoryMutation({
+                variables: {
+                    deleteCategoryId: categoryId
+                }
+            })
+
+            toast.success("Categoria excluida com sucesso!")
+        } catch (error) {
+            toast.error("Erro ao excluir a categoria!")
+            console.log(error)
+        } 
     }
 
     return (
@@ -84,6 +121,7 @@ export function Categories(){
                             totalOfTransactions={category.totalOfTransactions}
                             color={category.color}
                             icon={<DesiredIcon key={index} icon={category.icon} color={category.color} />}
+                            onDelete={() => handleDeleteCategory(category.id)}
                         />
                     ))
                 }
