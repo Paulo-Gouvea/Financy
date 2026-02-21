@@ -2,10 +2,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Trash, SquarePen } from "lucide-react"
+import { colors } from "@/lib/utils/utils"
 
 type CategoryCardProps = {
   title: string
   description: string
+  color: string
   count: number
   icon?: React.ReactNode
   onEdit?: () => void
@@ -17,14 +19,18 @@ export function CategoryCard({
   description,
   count,
   icon,
+  color,
   onEdit,
   onDelete,
 }: CategoryCardProps) {
-  return (
+    const desiredColor = colors.get(color) ? colors.get(color)?.light : colors.get('grey')?.light
+    const desiredFont = colors.get(color) ? colors.get(color)?.strongFont : colors.get('grey')?.strongFont
+
+    return (
     <Card className="w-full rounded-2xl shadow-sm">
       <CardHeader className="flex flex-row items-start justify-between pb-2">
-        <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 text-blue-600 text-xl">
-          {icon}
+        <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${desiredColor} text-xl`}>
+            {icon}
         </div>
 
         <div className="flex gap-2">
@@ -56,7 +62,7 @@ export function CategoryCard({
       </CardContent>
 
       <CardFooter className="flex items-center justify-between">
-        <Badge className="rounded-full px-3 py-1 bg-blue-100 text-blue-600 hover:bg-blue-100">
+        <Badge className={`rounded-full px-3 py-1 ${desiredColor} ${desiredFont}"`}>
           {title}
         </Badge>
 

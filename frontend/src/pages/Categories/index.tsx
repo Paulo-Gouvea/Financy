@@ -1,7 +1,8 @@
 import { PageDescription } from "@/components/PageDescription";
 import { CategoryStatisticsCards } from "./components/CategoryStatisticsCard";
-import { Tag, ArrowUpDown, ForkKnife } from "lucide-react"
+import { Tag, ArrowUpDown } from "lucide-react"
 import { CategoryCard } from "./components/CategoryCard";
+import { DesiredIcon } from "@/components/desiredIcon";
 
 export function Categories(){
     const categories = [
@@ -9,50 +10,58 @@ export function Categories(){
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
+            icon: "ForkKnife",
+            color: "blue"
         },
         {
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
+            icon: "Ticket",
+            color: "pink"
         },
         {
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
+            icon: "PiggyBank",
+            color: "green"
         },
         {
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
+            icon: "ShoppingCart",
+            color: "orange"
         },
         {
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
+            icon: "BriefcaseBusiness",
+            color: "green"
         },
         {
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
+            icon: "HeartPulse",
+            color: "red"
         },
         {
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
+            icon: "CarFront",
+            color: "purple"
         },
         {
             title: "Alimentação",
             description: "Restaurante, delivery e refeições",
             count: 12,
-            icon: "forkknife",
-        },
+            icon: "ToolCase",
+            color: "yellow"
+        }
     ]
 
     return (
@@ -92,7 +101,8 @@ export function Categories(){
                             title={category.title}
                             description={category.description}
                             count={category.count}
-                            icon={<ForkKnife className="w-5"/>}
+                            color={category.color}
+                            icon={<DesiredIcon key={index} icon={category.icon} color={category.color} />}
                         />
                     ))
                 }
