@@ -11,6 +11,7 @@ import { CreateCategoryModal } from "@/pages/Categories/components/CreateCategor
 import { useState } from "react";
 import { DELETE_CATEGORY } from "@/lib/graphql/mutations/category";
 import { toast } from "sonner";
+import { UpdateCategoryModal } from "./components/UpdateCategoryModal";
 
 export function Categories(){
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +19,8 @@ export function Categories(){
     const [newCategoryDescription, setNewCategoryDescription] = useState(''); 
     const [newCategoryIcon, setNewCategoryIcon] = useState('BriefcaseBusiness')
     const [newCategoryColor, setNewCategoryColor] = useState('green')
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
     const { data: categoriesData } = useQuery<{listCategoriesFromOwner: Category[] }>(LIST_CATEGORIES)
     const { data: categoriesTotal } = useQuery<{countCategoriesFromOwner: number }>(COUNT_CATEGORIES)
@@ -53,6 +56,15 @@ export function Categories(){
         setIsModalOpen(true)
     }
 
+    const handleOpenUpdateModal = (category: Category) => {
+        setSelectedCategory(category);
+        setNewCategoryTitle(category.title);
+        setNewCategoryDescription(category.description);
+        setNewCategoryIcon(category.icon);
+        setNewCategoryColor(category.color);
+        setIsUpdateModalOpen(true);
+    };
+
     const handleDeleteCategory = async (categoryId: string) => {
         try {
             await delecteCategoryMutation({
@@ -84,6 +96,23 @@ export function Categories(){
                 selectedColor={newCategoryColor}
                 setSelectedColor={setNewCategoryColor}
             />
+
+            <UpdateCategoryModal
+                open={isUpdateModalOpen}
+                setOpen={setIsUpdateModalOpen}
+                title="Atualizar Categoria"
+                description="Atualize os detalhes da categoria"
+                categoryTitle={newCategoryTitle}
+                setCategoryTitle={setNewCategoryTitle}
+                categoryDescription={newCategoryDescription}
+                setCategoryDescription={setNewCategoryDescription}
+                selectedIcon={newCategoryIcon}
+                setSelectedIcon={setNewCategoryIcon}
+                selectedColor={newCategoryColor}
+                setSelectedColor={setNewCategoryColor}
+                selectedCategory={selectedCategory}
+            />
+
             <PageDescription 
                 title="Categorias"
                 description="Organize suas transações por categorias"
@@ -122,6 +151,7 @@ export function Categories(){
                             color={category.color}
                             icon={<DesiredIcon key={index} icon={category.icon} color={category.color} />}
                             onDelete={() => handleDeleteCategory(category.id)}
+                            onEdit={() => handleOpenUpdateModal(category)}
                         />
                     ))
                 }

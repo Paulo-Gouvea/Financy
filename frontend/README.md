@@ -10,7 +10,7 @@
 - [ ]  Deve ser possível listar todas as transações de um usuário especifico
 - [X]  Deve ser possível criar uma categoria
 - [X]  Deve ser possível deletar uma categoria
-- [ ]  Deve ser possível editar uma categoria
+- [X]  Deve ser possível editar uma categoria
 - [X]  Deve ser possível listar todas as categorias
 - [X]  Deve ser possível listar todas as categorias de um usuário especifico
 
@@ -42,7 +42,7 @@
 
 Além disso, também temos algumas regras importantes específicas para o front-end:
 
-- [ ]  É obrigatória a criação de uma aplicação React usando GraphQL para consultas na API e Vite como `bundler`;
+- [X]  É obrigatória a criação de uma aplicação React usando GraphQL para consultas na API e Vite como `bundler`;
 - [ ]  Siga o mais fielmente possível o layout do Figma;
 
 ## Páginas
@@ -52,8 +52,8 @@ Essa aplicação possui:
 - [ ] dois modais com os formulários (Dialog):
 
 [ ] A página raiz (`/`) que exibe:
-[ ] Tela de login caso o usuário esteja deslogado
-[ ] Tela dashboard caso usuário esteja logado
+[X] Tela de login caso o usuário esteja deslogado
+[X] Tela dashboard caso usuário esteja logado
 
 ## Ferramentas
 
