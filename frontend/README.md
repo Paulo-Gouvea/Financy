@@ -3,16 +3,16 @@
 - [X]  O usuário pode criar uma conta e fazer login
 - [X]  O usuário pode ser capaz de alterar o seu nome 
 - [ ]  O usuário pode ver e gerenciar apenas as categorias e transações criadas por ele
-- [ ]  Deve ser possível criar uma transação
+- [X]  Deve ser possível criar uma transação
 - [ ]  Deve ser possível deletar uma transação
 - [ ]  Deve ser possível editar uma transação
 - [ ]  Deve ser possível listar todas as transações
 - [ ]  Deve ser possível listar todas as transações de um usuário especifico
-- [ ]  Deve ser possível criar uma categoria
+- [X]  Deve ser possível criar uma categoria
 - [ ]  Deve ser possível deletar uma categoria
 - [ ]  Deve ser possível editar uma categoria
 - [ ]  Deve ser possível listar todas as categorias
-- [ ]  Deve ser possível listar todas as categorias de um usuário especifico
+- [X]  Deve ser possível listar todas as categorias de um usuário especifico
 
 ## Funcionalidades para o front-end
 # Tela Dashboard
@@ -34,11 +34,11 @@
 - [ ]  Deve ser apresentado o total das transações coletadas no filtro 
 
 # Tela Categorias
-- [ ]  Deve ser possivel mostrar o total de categorias
-- [ ]  Deve ser possivel mostrar o total de transações
-- [ ]  Deve ser possivel mostrar a categoria com mais transações
-- [ ]  Deve ser possivel mostrar o total de transações em cada categoria
-- [ ]  Deve ser possivel mostrar as categorias criadas (não tem uma paginação então pode colocar um scroll)
+- [X]  Deve ser possivel mostrar o total de categorias
+- [X]  Deve ser possivel mostrar o total de transações
+- [X]  Deve ser possivel mostrar a categoria com mais transações
+- [X]  Deve ser possivel mostrar o total de transações em cada categoria
+- [X]  Deve ser possivel mostrar as categorias criadas (não tem uma paginação então pode colocar um scroll)
 
 Além disso, também temos algumas regras importantes específicas para o front-end:
 

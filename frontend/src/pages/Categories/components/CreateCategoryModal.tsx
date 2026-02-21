@@ -12,7 +12,11 @@ import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { getColoredButton } from "@/lib/ColoredButton"
+import { CREATE_CATEGORY } from "@/lib/graphql/mutations/category"
+import { COUNT_CATEGORIES, LIST_CATEGORIES } from "@/lib/graphql/queries/categories"
 import { getIcons } from "@/lib/icons"
+import { useMutation } from "@apollo/client/react"
+import { toast } from "sonner"
 
 interface ModalProps {
   open: boolean
@@ -46,25 +50,39 @@ export function CreateCategoryModal({
   const icons = getIcons(selectedIcon, setSelectedIcon)
   const coloredButtons = getColoredButton(selectedColor, setSelectedColor)
 
+  const [createCategory, { loading }] = useMutation(CREATE_CATEGORY, {
+    onCompleted(){
+      toast.success("Categoria criada com sucesso")
+      setOpen(false) 
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    refetchQueries: [
+      { query: LIST_CATEGORIES },
+      { query: COUNT_CATEGORIES }
+    ],
+    awaitRefetchQueries: true
+  })
+
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault() 
 
-    console.log("Título:", categoryTitle)
-    console.log("Descrição:", categoryDescription)
-    console.log("Ícone:", selectedIcon)
-    console.log("Cor:", selectedColor)
+    createCategory({
+      variables: {
+        data: {
+          title: categoryTitle,
+          description: categoryDescription,
+          icon: selectedIcon,
+          color: selectedColor
+        }
+      }
+    })
 
-    categoryTitle = ''
-    categoryDescription = ''
+    title = ''
+    description = ''
     selectedIcon = ''
     selectedColor = ''
-
-    console.log("Título:", categoryTitle)
-    console.log("Descrição:", categoryDescription)
-    console.log("Ícone:", selectedIcon)
-    console.log("Cor:", selectedColor)
-
-    setOpen(false) 
   }
 
   return (
@@ -118,7 +136,7 @@ export function CreateCategoryModal({
           </div>
 
           <DialogFooter className="mt-6">
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={loading}>
               Salvar
             </Button>
           </DialogFooter>
