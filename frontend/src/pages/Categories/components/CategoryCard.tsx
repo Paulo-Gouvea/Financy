@@ -62,7 +62,7 @@ export function CategoryCard({
       </CardContent>
 
       <CardFooter className="flex items-center justify-between">
-        <Badge className={`rounded-full px-3 py-1 ${desiredColor} ${desiredFont}"`}>
+        <Badge className={`rounded-full px-3 py-1 ${desiredColor} ${desiredFont} hover:${desiredColor}`}>
           {title}
         </Badge>
 
