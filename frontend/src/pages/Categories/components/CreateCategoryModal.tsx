@@ -16,6 +16,7 @@ import { CREATE_CATEGORY } from "@/lib/graphql/mutations/category"
 import { COUNT_CATEGORIES, LIST_CATEGORIES } from "@/lib/graphql/queries/categories"
 import { getIcons } from "@/lib/icons"
 import { useMutation } from "@apollo/client/react"
+import { useEffect } from "react"
 import { toast } from "sonner"
 
 interface ModalProps {
@@ -50,9 +51,28 @@ export function CreateCategoryModal({
   const icons = getIcons(selectedIcon, setSelectedIcon)
   const coloredButtons = getColoredButton(selectedColor, setSelectedColor)
 
+  useEffect(() => {
+  if (open) {
+    setCategoryTitle('')
+    setCategoryDescription('')
+    setSelectedIcon('BriefcaseBusiness')
+    setSelectedColor('green')
+  }
+}, [open,
+  setCategoryTitle,
+  setCategoryDescription,
+  setSelectedIcon,
+  setSelectedColor])
+
   const [createCategory, { loading }] = useMutation(CREATE_CATEGORY, {
     onCompleted(){
       toast.success("Categoria criada com sucesso")
+
+      setCategoryTitle('')
+      setCategoryDescription('')
+      setSelectedIcon('BriefcaseBusiness')
+      setSelectedColor('green') 
+
       setOpen(false) 
     },
     onError(error) {
@@ -78,11 +98,6 @@ export function CreateCategoryModal({
         }
       }
     })
-
-    title = ''
-    description = ''
-    selectedIcon = ''
-    selectedColor = ''
   }
 
   return (
@@ -116,7 +131,6 @@ export function CreateCategoryModal({
                 value={categoryDescription}
                 onChange={(e) => setCategoryDescription(e.target.value)}
                 className="pl-3 py-6 placeholder:text-gray-400"
-                required
               />
             </Field>
           </FieldGroup>
