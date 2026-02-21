@@ -15,7 +15,8 @@ import {
     BookOpen,
     BaggageClaim,
     Mailbox,
-    ReceiptText 
+    ReceiptText,
+    X 
 } from "lucide-react"
 
 interface DesiredIconProps {
@@ -46,6 +47,7 @@ export function DesiredIcon({
         ["BaggageClaim", <BaggageClaim className={`${desiredColor} w-5`} />],
         ["Mailbox", <Mailbox className={`${desiredColor} w-5`} />],
         ["ReceiptText", <ReceiptText className={`${desiredColor} w-5`} />],
+        ["X", <X className={`${desiredColor} w-5`} />],
     ]);
 
     const desiredIcon = iconMap.get(icon)

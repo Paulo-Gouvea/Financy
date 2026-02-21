@@ -16,3 +16,22 @@ export const LIST_CATEGORIES = gql`
         }                         
     }   
 `
+
+export const COUNT_CATEGORIES = gql`
+    query CountCategoriesFromOwner {
+        countCategoriesFromOwner
+    }
+`
+
+export const GET_CATEGORIES_WITH_THE_MOST_TRANSACTIONS = gql`
+    query GetCategoryWithTheMostTransactions {
+        getCategoryWithTheMostTransactions {
+            id, 
+            title,
+            icon, 
+            color,
+            description,
+            totalOfTransactions
+        }
+    }
+`
