@@ -3,66 +3,14 @@ import { CategoryStatisticsCards } from "./components/CategoryStatisticsCard";
 import { Tag, ArrowUpDown } from "lucide-react"
 import { CategoryCard } from "./components/CategoryCard";
 import { DesiredIcon } from "@/components/desiredIcon";
+import { LIST_CATEGORIES } from "@/lib/graphql/queries/categories";
+import { useQuery } from "@apollo/client/react";
+import type { Category } from "@/types";
 
 export function Categories(){
-    const categories = [
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "ForkKnife",
-            color: "blue"
-        },
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "Ticket",
-            color: "pink"
-        },
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "PiggyBank",
-            color: "green"
-        },
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "ShoppingCart",
-            color: "orange"
-        },
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "BriefcaseBusiness",
-            color: "green"
-        },
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "HeartPulse",
-            color: "red"
-        },
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "CarFront",
-            color: "purple"
-        },
-        {
-            title: "Alimentação",
-            description: "Restaurante, delivery e refeições",
-            count: 12,
-            icon: "ToolCase",
-            color: "yellow"
-        }
-    ]
+    const { data } = useQuery<{listCategoriesFromOwner: Category[] }>(LIST_CATEGORIES)
+
+    const categories = data?.listCategoriesFromOwner || []
 
     return (
         <>
@@ -100,7 +48,7 @@ export function Categories(){
                             key={index}
                             title={category.title}
                             description={category.description}
-                            count={category.count}
+                            totalOfTransactions={category.totalOfTransactions}
                             color={category.color}
                             icon={<DesiredIcon key={index} icon={category.icon} color={category.color} />}
                         />

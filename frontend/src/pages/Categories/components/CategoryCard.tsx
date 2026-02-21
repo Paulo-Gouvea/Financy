@@ -8,7 +8,7 @@ type CategoryCardProps = {
   title: string
   description: string
   color: string
-  count: number
+  totalOfTransactions: number
   icon?: React.ReactNode
   onEdit?: () => void
   onDelete?: () => void
@@ -17,7 +17,7 @@ type CategoryCardProps = {
 export function CategoryCard({
   title,
   description,
-  count,
+  totalOfTransactions,
   icon,
   color,
   onEdit,
@@ -67,7 +67,7 @@ export function CategoryCard({
         </Badge>
 
         <span className="text-sm text-muted-foreground">
-          {count} itens
+          {totalOfTransactions} itens
         </span>
       </CardFooter>
     </Card>
