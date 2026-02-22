@@ -142,14 +142,14 @@ export function Categories(){
 
             <div className="mt-10 grid grid-cols-4 gap-10">
                 {
-                    categories.map((category, index) => (
+                    categories.map((category) => (
                         <CategoryCard 
-                            key={index}
+                            key={category.id}
                             title={category.title}
                             description={category.description}
                             totalOfTransactions={category.totalOfTransactions}
                             color={category.color}
-                            icon={<DesiredIcon key={index} icon={category.icon} color={category.color} />}
+                            icon={<DesiredIcon key={category.id} icon={category.icon} color={category.color} />}
                             onDelete={() => handleDeleteCategory(category.id)}
                             onEdit={() => handleOpenUpdateModal(category)}
                         />

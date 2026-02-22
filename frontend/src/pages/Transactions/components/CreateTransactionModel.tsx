@@ -18,9 +18,13 @@ import { Calendar } from "@/components/ui/calendar"
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { LIST_CATEGORIES } from "@/lib/graphql/queries/categories"
+import type { Category } from "@/types"
+import { useQuery } from "@apollo/client/react"
+import { DesiredIcon } from "@/components/DesiredIcon"
 
 interface ModalProps {
   open: boolean
@@ -28,9 +32,15 @@ interface ModalProps {
   description: string
   transactionType?: string
   transactionDescription: string
+  transactionSelectedDate: Date | undefined
+  transactionValue: number
+  transactionCategory: string
   setOpen: (open: boolean) => void
   setTransactionType?: (type: string) => void
   setTransactionDescription: (value: string) => void
+  setTransactionSelectedDate: (value: Date | undefined) => void
+  setTransactionValue: (value: number) => void
+  setTransactionCategory: (value: string) => void
 }
 
 export function CreateTransactionModal({
@@ -40,14 +50,24 @@ export function CreateTransactionModal({
   description,
   transactionType = 'OUTCOME',
   transactionDescription,
+  transactionSelectedDate,
+  transactionValue,
+  transactionCategory,
   setTransactionType,
   setTransactionDescription,
+  setTransactionSelectedDate,
+  setTransactionCategory,
+  setTransactionValue
 }: ModalProps) {
-    const [date, setDate] = useState<Date | undefined>()
+    const { data: categoriesData } = useQuery<{listCategoriesFromOwner: Category[] }>(LIST_CATEGORIES)
+    
+    const categories = categoriesData?.listCategoriesFromOwner || []
 
-  useEffect(() => {
+    console.log('categories => ' +JSON.stringify(categories))
 
-  }, [])
+    useEffect(() => {
+
+    }, [])
 
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -55,7 +75,10 @@ export function CreateTransactionModal({
 
     const data = {
         transactionType,
-        transactionDescription
+        transactionDescription,
+        transactionSelectedDate,
+        transactionValue,
+        transactionCategory
     }
 
     console.log('data ===> ' +JSON.stringify(data))
@@ -115,7 +138,7 @@ export function CreateTransactionModal({
                         className="w-full justify-between py-6 pl-3 font-normal bg-white hover:bg-white"
                     >
                         <span className="text-muted-foreground">
-                            {date ? date.toLocaleDateString("pt-BR") : "Selecione"}
+                            {transactionSelectedDate ? transactionSelectedDate.toLocaleDateString("pt-BR") : "Selecione"}
                         </span>
                     </Button>
                     </PopoverTrigger>
@@ -123,8 +146,8 @@ export function CreateTransactionModal({
                     <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                         mode="single"
-                        selected={date}
-                        onSelect={(day) => setDate(day)}
+                        selected={transactionSelectedDate}
+                        onSelect={(day) => setTransactionSelectedDate(day)}
                     />
                     </PopoverContent>
                 </Popover>
@@ -136,8 +159,8 @@ export function CreateTransactionModal({
                         type="number"
                         step="0.01"
                         placeholder="R$   0,00"
-                        //value={transactionDescription}
-                        //onChange={(e) => setTransactionDescription(e.target.value)}
+                        value={transactionValue}
+                        onChange={(e) => setTransactionValue(parseFloat(e.target.value))}
                         className="pl-3 py-6 placeholder:text-black"
                         required
                     />
@@ -145,14 +168,20 @@ export function CreateTransactionModal({
             </div>
             <Field>
                     <Label htmlFor="title">Categoria</Label>
-                    <Select>
+                    <Select onValueChange={(category) => setTransactionCategory(category)}>
                         <SelectTrigger className="w-[220px] px-4 py-5">
                             <SelectValue className="text-gray-400" placeholder="Selecione" />
                         </SelectTrigger>
 
                         <SelectContent>
-                            <SelectItem value="receitas">Receitas</SelectItem>
-                            <SelectItem value="despesas">Despesas</SelectItem>
+                            {
+                                categories.map((category) => (
+                                    <div className="flex p-4 gap-2 items-center">
+                                        <DesiredIcon key={category.id} icon={category.icon} color={category.color} />
+                                        <SelectItem className="bg-white text-black hover:text-black hover:bg-white" id={category.id} value={category.id}>{category.title}</SelectItem>
+                                    </div>
+                                ))
+                            }
                         </SelectContent>
                     </Select>
                 </Field>

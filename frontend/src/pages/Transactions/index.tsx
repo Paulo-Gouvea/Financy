@@ -9,11 +9,11 @@ export function Transaction(){
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newTransactionType, setNewTransactionType] = useState('OUTCOME')
     const [newTransactionDescription, setNewTransactionDescription] = useState('')
-    const [newTransactionSelectedDate, setNewTransactionSelectedDate] = useState('')
-    const [newTransactionValue, setNewTransactionValue] = useState('')
+    const [newTransactionSelectedDate, setNewTransactionSelectedDate] = useState<Date | undefined>(undefined)
+    const [newTransactionValue, setNewTransactionValue] = useState(0)
     const [newTransactionCategory, setNewTransactionCategory] = useState('')
-    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
-    const [isUpdatedModalOpen, setIsUpdatedModalOpen] = useState(false)
+    //const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
+    //const [isUpdatedModalOpen, setIsUpdatedModalOpen] = useState(false)
 
     const handleOpenModal = () => {
         setIsModalOpen(true)
@@ -30,6 +30,12 @@ export function Transaction(){
                 setTransactionType={setNewTransactionType}
                 transactionDescription={newTransactionDescription}
                 setTransactionDescription={setNewTransactionDescription}
+                transactionSelectedDate={newTransactionSelectedDate}
+                setTransactionSelectedDate={setNewTransactionSelectedDate}
+                transactionValue={newTransactionValue}
+                setTransactionValue={setNewTransactionValue}
+                transactionCategory={newTransactionCategory}
+                setTransactionCategory={setNewTransactionCategory}
             />
 
             <PageDescription 
