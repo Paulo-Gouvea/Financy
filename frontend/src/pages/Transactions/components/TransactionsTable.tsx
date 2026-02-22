@@ -15,10 +15,12 @@ import { Button } from "@/components/ui/button"
 import {
   Utensils,
   TrendingUp,
-  Trash2,
-  Pencil,
+  Trash,
+  SquarePen,
   ArrowUpCircle,
   ArrowDownCircle,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react"
 
 const transactions = [
@@ -114,16 +116,16 @@ function getTypeStyle(type: string) {
 
 export function TransactionsTable() {
   return (
-    <Card className="mt-7 p-4">
+    <Card className="mt-7 overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead>Descrição</TableHead>
-            <TableHead className="text-center">Data</TableHead>
-            <TableHead className="text-center">Categoria</TableHead>
-            <TableHead className="text-center">Tipo</TableHead>
-            <TableHead className="text-right">Valor</TableHead>
-            <TableHead className="text-right">Ações</TableHead>
+          <TableRow className="hover:bg-white">
+            <TableHead className="text-gray-500 p-4" >Descrição</TableHead>
+            <TableHead className="text-center text-gray-500 p-4">Data</TableHead>
+            <TableHead className="text-center text-gray-500 p-4">Categoria</TableHead>
+            <TableHead className="text-center text-gray-500 p-4">Tipo</TableHead>
+            <TableHead className="text-right text-gray-500 p-4">Valor</TableHead>
+            <TableHead className="text-right text-gray-500 p-4">Ações</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -134,9 +136,9 @@ export function TransactionsTable() {
             const TypeIcon = type.icon
 
             return (
-              <TableRow key={transaction.id}>
+              <TableRow className="hover:bg-white" key={transaction.id}>
                 <TableCell>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 py-2 px-2">
                     <div className="p-2 rounded-md bg-muted">
                       <Icon className="w-4 h-4" />
                     </div>
@@ -147,7 +149,7 @@ export function TransactionsTable() {
                   </div>
                 </TableCell>
 
-                <TableCell className="text-center">{transaction.selectedDate}</TableCell>
+                <TableCell className="text-center text-gray-600">{transaction.selectedDate}</TableCell>
 
                 <TableCell className="text-center">
                   <Badge variant="secondary">
@@ -163,11 +165,7 @@ export function TransactionsTable() {
                 </TableCell>
 
                 <TableCell
-                  className={`text-right font-medium ${
-                    transaction.type === "INCOME"
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }`}
+                  className='text-right font-medium'
                 >
                   {transaction.value.toLocaleString("pt-BR", {
                     style: "currency",
@@ -178,11 +176,11 @@ export function TransactionsTable() {
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
                     <Button size="icon" variant="outline">
-                      <Trash2 className="w-4 h-4" />
+                      <Trash className="w-4 h-4 text-red-500" />
                     </Button>
 
                     <Button size="icon" variant="outline">
-                      <Pencil className="w-4 h-4" />
+                      <SquarePen className="w-4 h-4" />
                     </Button>
                   </div>
                 </TableCell>
@@ -191,7 +189,37 @@ export function TransactionsTable() {
           })}
         </TableBody>
         <TableFooter>
-            sssssssssssss
+          <TableRow className="bg-white hover:bg-white">
+            <TableCell colSpan={6}>
+              <div className="py-2 px-2 flex items-center justify-between w-full text-gray-700">
+                <p>
+                  1 a 10 | 27 resultados
+                </p>
+
+                <div className="flex justify-end gap-2">
+                  <Button size="icon" variant="outline">
+                    <ChevronLeft className="w-4 h-4" />
+                  </Button>
+
+                  <Button size="icon" variant="outline">
+                    1
+                  </Button>
+
+                  <Button size="icon" variant="outline">
+                    2
+                  </Button>
+
+                  <Button size="icon" variant="outline">
+                    3
+                  </Button>
+
+                  <Button size="icon" variant="outline">
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </TableCell>
+          </TableRow>
         </TableFooter>
       </Table>
     </Card>
