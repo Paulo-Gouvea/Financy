@@ -16,8 +16,12 @@ export function Transaction(){
     const [newTransactionCategory, setNewTransactionCategory] = useState('')
     //const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
     //const [isUpdatedModalOpen, setIsUpdatedModalOpen] = useState(false)
+    const [descriptionInput, setDescriptionInput] = useState('')
+    const [typeInput, setTypeInput] = useState('')
+    const [categoryInput, setCategoryInput] = useState('')
+    const [periodInput, setPeriodInput] = useState<Date | null>(null)
 
-    const { data: transactionsData } = useQuery<{
+    const { data: transactionsData, refetch: filterTransactionRefetch } = useQuery<{
     filterTransactions: {
         transactions: Transaction[]
         totalOfTransactions: number
@@ -31,11 +35,33 @@ export function Transaction(){
     variables: { data: {} }
     });
 
+    console.log('transactionsData?.filterTransactions ===> ' +JSON.stringify(transactionsData?.filterTransactions))
+
     const transactions = transactionsData?.filterTransactions.transactions || [];
+    const totalOfTransactions = transactionsData?.filterTransactions.totalOfTransactions || 0
+    const page = transactionsData?.filterTransactions.page || 1
+    const perPage = transactionsData?.filterTransactions.perPage || 0
+    const totalPages = transactionsData?.filterTransactions.totalPages || 0
+    const hasPreviousPage = transactionsData?.filterTransactions.hasPreviousPage || false
+    const hasNextPage = transactionsData?.filterTransactions.hasNextPage || false
 
     const handleOpenModal = () => {
         setIsModalOpen(true)
     }
+
+    const handleChangePage = (newPage: number) => {
+
+        filterTransactionRefetch({
+            data: {
+                description: descriptionInput,
+                type: typeInput,
+                categoryId: categoryInput,
+                selectedDate: periodInput,
+                page: newPage
+            }
+        });
+    };
+
 
     return (
         <>
@@ -69,6 +95,13 @@ export function Transaction(){
 
             <TransactionsTable 
                 transactions={transactions}
+                totalOfTransactions={totalOfTransactions}
+                page={page}
+                perPage={perPage}
+                hasPreviousPage={hasPreviousPage}
+                hasNextPage={hasNextPage}
+                onChangePage={handleChangePage}
+                totalPages={totalPages}
             />
         </>
     )

@@ -6,8 +6,8 @@
 - [X]  Deve ser possível criar uma transação
 - [ ]  Deve ser possível deletar uma transação
 - [ ]  Deve ser possível editar uma transação
-- [ ]  Deve ser possível listar todas as transações
-- [ ]  Deve ser possível listar todas as transações de um usuário especifico
+- [X]  Deve ser possível listar todas as transações
+- [X]  Deve ser possível listar todas as transações de um usuário especifico
 - [X]  Deve ser possível criar uma categoria
 - [X]  Deve ser possível deletar uma categoria
 - [X]  Deve ser possível editar uma categoria
@@ -30,8 +30,8 @@
 - [ ]  Deve ser possivel fazer uma filtragem pelo tipo da transação
 - [ ]  Deve ser possível fazer uma filtragem pela categoria da transação
 - [ ]  Deve ser possível fazer uma filtragem pelo período da transação
-- [ ]  Deve ser apresentado uma tabela com as transações ordenadas pela selectedDate. Deve permitir paginação
-- [ ]  Deve ser apresentado o total das transações coletadas no filtro 
+- [X]  Deve ser apresentado uma tabela com as transações ordenadas pela selectedDate. Deve permitir paginação
+- [X]  Deve ser apresentado o total das transações coletadas no filtro 
 
 # Tela Categorias
 - [X]  Deve ser possivel mostrar o total de categorias

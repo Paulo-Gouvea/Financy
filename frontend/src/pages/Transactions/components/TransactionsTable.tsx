@@ -42,6 +42,13 @@ import type { Transaction } from "@/types"
 
 interface TransactionsTableProps {
   transactions: Transaction[]
+  totalOfTransactions: number
+  page: number
+  perPage: number
+  hasPreviousPage: boolean
+  hasNextPage: boolean
+  totalPages: number
+  onChangePage: (page: number) => void
 }
 
 const iconMap = new Map<string, React.ElementType>([
@@ -136,8 +143,95 @@ function formatDateToDDMMYYYY(d: Date) {
   return `${day}/${month}/${year}`;
 }
 
+function getNumberButton(hasPreviousPage: boolean, hasNextPage: boolean, totalOfTransactions: number, page: number, totalPages: number,  onChangePage: (page: number) => void ){
+  console.log(totalOfTransactions)
+  console.log(page)
+
+
+  if(totalOfTransactions > 0 && totalOfTransactions <= 10){
+    return (
+      <Button size="icon" variant="outline" disabled={true} onClick={() => onChangePage(1)}>
+        1
+      </Button>
+    )
+  } else if(totalOfTransactions > 10 && totalOfTransactions <= 20){
+    return (
+      <>
+        <Button size="icon" variant="outline" disabled={!hasPreviousPage} onClick={() => onChangePage(1)} >
+        1
+      </Button>
+
+      <Button size="icon" variant="outline" disabled={!hasNextPage} onClick={() => onChangePage(2)} >
+        2
+      </Button>
+      </>
+    )
+  } else if(totalOfTransactions > 20){
+    if(page === 1 || page === 2) {
+      return (
+      <>
+        <Button size="icon" variant="outline" disabled={page === 1} onClick={() => onChangePage(1)}>
+          1
+        </Button>
+
+        <Button size="icon" variant="outline" disabled={page === 2} onClick={() => onChangePage(2)}>
+          2
+        </Button>
+
+        <Button size="icon" variant="outline" onClick={() => onChangePage(3)}>
+          3
+        </Button>
+      </>
+    )
+    } else if(page >= 2){
+      const actualPage = totalPages - page;
+
+      if(actualPage === 0){
+        return (
+          <>
+            <Button size="icon" variant="outline" onClick={() => onChangePage(page - 2)}>
+              {page - 2}
+            </Button>
+
+            <Button size="icon" variant="outline" onClick={() => onChangePage(page - 1)}>
+              {page - 1 }
+            </Button>
+
+            <Button size="icon" variant="outline" disabled={true} onClick={() => onChangePage(page)}>
+              {page}
+            </Button>
+          </>
+        )
+      } else if(actualPage >= 1) {
+        return (
+          <>
+            <Button size="icon" variant="outline" onClick={() => onChangePage(page - 1)}>
+              {page - 1}
+            </Button>
+
+            <Button size="icon" variant="outline" onClick={() => onChangePage(page)}>
+              {page}
+            </Button>
+
+            <Button size="icon" variant="outline" onClick={() => onChangePage(page + 1)}>
+              {page + 1}
+            </Button>
+          </>
+        )
+      }
+    }
+  }
+}
+
 export function TransactionsTable({
   transactions,
+  totalOfTransactions,
+  page,
+  perPage,
+  totalPages,
+  hasPreviousPage,
+  hasNextPage,
+  onChangePage
 }: TransactionsTableProps) {
   return (
     <Card className="mt-7 overflow-hidden">
@@ -221,12 +315,26 @@ export function TransactionsTable({
                 </TableCell>
 
                 {/* Valor */}
-                <TableCell className="text-right font-medium">
-                  {transaction.value.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </TableCell>
+                {
+                  transaction.type === 'OUTCOME' ? 
+                  <TableCell className="text-right font-medium">
+                    {
+                      `- ${transaction.value.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}`
+                    }
+                  </TableCell>
+                  :
+                  <TableCell className="text-right font-medium">
+                    {
+                      `+ ${transaction.value.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}`
+                    }
+                  </TableCell>
+                }
 
                 {/* Ações */}
                 <TableCell className="text-right">
@@ -249,26 +357,18 @@ export function TransactionsTable({
           <TableRow className="bg-white hover:bg-white">
             <TableCell colSpan={6}>
               <div className="py-2 px-2 flex items-center justify-between w-full text-gray-700">
-                <p>1 a 10 | 27 resultados</p>
+                <p>1 a {perPage} | {totalOfTransactions} resultados</p>
 
                 <div className="flex justify-end gap-2">
-                  <Button size="icon" variant="outline">
+                  <Button size="icon" variant="outline" onClick={() => onChangePage(page - 1)} disabled={!hasPreviousPage}>
                     <ChevronLeft className="w-4 h-4" />
                   </Button>
 
-                  <Button size="icon" variant="outline">
-                    1
-                  </Button>
+                  {
+                    getNumberButton(hasPreviousPage, hasNextPage, totalOfTransactions, page, totalPages, onChangePage)
+                  }
 
-                  <Button size="icon" variant="outline">
-                    2
-                  </Button>
-
-                  <Button size="icon" variant="outline">
-                    3
-                  </Button>
-
-                  <Button size="icon" variant="outline">
+                  <Button size="icon" variant="outline" onClick={() => onChangePage(page + 1)} disabled={!hasNextPage}>
                     <ChevronRight className="w-4 h-4" />
                   </Button>
                 </div>
