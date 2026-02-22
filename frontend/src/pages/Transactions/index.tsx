@@ -1,7 +1,24 @@
+import { PageDescription } from "@/components/PageDescription";
+import { TransactionsFilter } from "./components/TransactionsFilter";
+import { TransactionsTable } from "./components/TransactionsTable";
+
 export function Transaction(){
     return (
-        <h1>
-            PAGINA DE TRANSAÇÕES
-        </h1>
+        <>
+            <PageDescription 
+                title="Transações"
+                description="Gerencie todas as suas transações financeiras"
+                buttonTitle="Nova transação"
+                onClick={() => console.log('teste modal')}
+            />
+
+            <TransactionsFilter 
+
+            />
+
+            <TransactionsTable 
+            
+            />
+        </>
     )
 }
