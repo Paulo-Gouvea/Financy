@@ -298,7 +298,7 @@ export function TransactionsTable({
                 {/* Categoria */}
                 <TableCell className="text-center">
                   <Badge
-                    className={`${color.bg} ${color.text} rounded-2xl`}
+                    className={`${color.bg} ${color.text} hover:${color.bg} rounded-2xl`}
                   >
                     {transaction.category?.title}
                   </Badge>
@@ -339,12 +339,12 @@ export function TransactionsTable({
                 {/* Ações */}
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Button size="icon" variant="outline">
-                      <Trash className="w-4 h-4 text-red-500" />
+                    <Button size="icon" className="shadow:none border border-gray-300 hover: bg-white">
+                      <Trash className="w-4 h-4 text-red-500 hover: bg-white" />
                     </Button>
 
-                    <Button size="icon" variant="outline">
-                      <SquarePen className="w-4 h-4" />
+                    <Button size="icon" className="shadow:none border border-gray-300 hover: bg-white">
+                      <SquarePen className="w-4 h-4 text-black" />
                     </Button>
                   </div>
                 </TableCell>
