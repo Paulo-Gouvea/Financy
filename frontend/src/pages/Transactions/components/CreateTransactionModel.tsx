@@ -27,6 +27,7 @@ import { useMutation, useQuery } from "@apollo/client/react"
 import { DesiredIcon } from "@/components/DesiredIcon"
 import { CREATE_TRANSACTION } from "@/lib/graphql/mutations/transaction"
 import { toast } from "sonner"
+import { FILTER_TRANSACTIONS } from "@/lib/graphql/queries/transactions"
 
 interface ModalProps {
   open: boolean
@@ -75,7 +76,7 @@ export function CreateTransactionModal({
             onCompleted(){
                 toast.success("Transação criada com sucesso")
 
-                setTransactionType('')
+                setTransactionType('OUTCOME')
                 setTransactionDescription('')
                 setTransactionSelectedDate(undefined)
                 setTransactionValue(0) 
@@ -85,7 +86,11 @@ export function CreateTransactionModal({
             },
             onError(error) {
                 toast.error(error.message)
-            }
+            },
+            refetchQueries: [
+                { query: FILTER_TRANSACTIONS, variables: { data: {} } },
+              ],
+            awaitRefetchQueries: true
         })
 
 

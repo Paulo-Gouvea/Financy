@@ -13,90 +13,103 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 import {
-  Utensils,
-  TrendingUp,
   Trash,
   SquarePen,
   ArrowUpCircle,
   ArrowDownCircle,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ReceiptText,
+  Mailbox,
+  BaggageClaim,
+  BookOpen,
+  Dumbbell,
+  Gift,
+  House,
+  PawPrint,
+  ForkKnife,
+  ToolCase,
+  Ticket,
+  ShoppingCart,
+  PiggyBank,
+  HeartPulse,
+  CarFront,
+  BriefcaseBusiness,
+  X
 } from "lucide-react"
 
-const transactions = [
-  {
-    id: "1",
-    description: "Jantar no restaurante",
-    selectedDate: "30/11/25",
-    category: "Alimentação",
-    type: "OUTCOME",
-    value: -89.5,
-    icon: Utensils,
+import type { Transaction } from "@/types"
+
+interface TransactionsTableProps {
+  transactions: Transaction[]
+}
+
+const iconMap = new Map<string, React.ElementType>([
+  ["BriefcaseBusiness", BriefcaseBusiness],
+  ["CarFront", CarFront],
+  ["HeartPulse", HeartPulse],
+  ["PiggyBank", PiggyBank],
+  ["ShoppingCart", ShoppingCart],
+  ["Ticket", Ticket],
+  ["ToolCase", ToolCase],
+  ["ForkKnife", ForkKnife],
+  ["PawPrint", PawPrint],
+  ["House", House],
+  ["Gift", Gift],
+  ["Dumbbell", Dumbbell],
+  ["BookOpen", BookOpen],
+  ["BaggageClaim", BaggageClaim],
+  ["Mailbox", Mailbox],
+  ["ReceiptText", ReceiptText],
+])
+
+const colorMap: Record<
+  string,
+  { bg: string; text: string; icon: string; iconBg: string }
+> = {
+  green: {
+    bg: "bg-green-200",
+    text: "text-green-600",
+    icon: "text-green-600",
+    iconBg: "bg-green-100",
   },
-  {
-    id: "2",
-    description: "Freelance",
-    selectedDate: "24/11/25",
-    category: "Salário",
-    type: "INCOME",
-    value: 2500,
-    icon: TrendingUp,
+  blue: {
+    bg: "bg-blue-200",
+    text: "text-blue-600",
+    icon: "text-blue-600",
+    iconBg: "bg-blue-100",
   },
-  {
-    id: "1",
-    description: "Jantar no restaurante",
-    selectedDate: "30/11/25",
-    category: "Alimentação",
-    type: "OUTCOME",
-    value: -89.5,
-    icon: Utensils,
+  purple: {
+    bg: "bg-purple-200",
+    text: "text-purple-600",
+    icon: "text-purple-600",
+    iconBg: "bg-purple-100",
   },
-  {
-    id: "2",
-    description: "Freelance",
-    selectedDate: "24/11/25",
-    category: "Salário",
-    type: "INCOME",
-    value: 2500,
-    icon: TrendingUp,
+  pink: {
+    bg: "bg-pink-200",
+    text: "text-pink-600",
+    icon: "text-pink-600",
+    iconBg: "bg-pink-100",
   },
-  {
-    id: "1",
-    description: "Jantar no restaurante",
-    selectedDate: "30/11/25",
-    category: "Alimentação",
-    type: "OUTCOME",
-    value: -89.5,
-    icon: Utensils,
+  red: {
+    bg: "bg-red-200",
+    text: "text-red-600",
+    icon: "text-red-600",
+    iconBg: "bg-red-100",
   },
-  {
-    id: "2",
-    description: "Freelance",
-    selectedDate: "24/11/25",
-    category: "Salário",
-    type: "INCOME",
-    value: 2500,
-    icon: TrendingUp,
+  orange: {
+    bg: "bg-orange-200",
+    text: "text-orange-600",
+    icon: "text-orange-600",
+    iconBg: "bg-orange-100",
   },
-  {
-    id: "1",
-    description: "Jantar no restaurante",
-    selectedDate: "30/11/25",
-    category: "Alimentação",
-    type: "OUTCOME",
-    value: -89.5,
-    icon: Utensils,
+  yellow: {
+    bg: "bg-yellow-200",
+    text: "text-yellow-600",
+    icon: "text-yellow-600",
+    iconBg: "bg-yellow-100",
   },
-  {
-    id: "2",
-    description: "Freelance",
-    selectedDate: "24/11/25",
-    category: "Salário",
-    type: "INCOME",
-    value: 2500,
-    icon: TrendingUp,
-  }
-]
+}
 
 function getTypeStyle(type: string) {
   if (type === "INCOME") {
@@ -114,33 +127,67 @@ function getTypeStyle(type: string) {
   }
 }
 
-export function TransactionsTable() {
+function formatDateToDDMMYYYY(d: Date) {
+  const date = new Date(d);
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Janeiro é 0
+  const year = date.getUTCFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
+export function TransactionsTable({
+  transactions,
+}: TransactionsTableProps) {
   return (
     <Card className="mt-7 overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-white">
-            <TableHead className="text-gray-500 p-4" >Descrição</TableHead>
-            <TableHead className="text-center text-gray-500 p-4">Data</TableHead>
-            <TableHead className="text-center text-gray-500 p-4">Categoria</TableHead>
-            <TableHead className="text-center text-gray-500 p-4">Tipo</TableHead>
-            <TableHead className="text-right text-gray-500 p-4">Valor</TableHead>
-            <TableHead className="text-right text-gray-500 p-4">Ações</TableHead>
+            <TableHead className="text-gray-500 p-4">
+              Descrição
+            </TableHead>
+            <TableHead className="text-center text-gray-500 p-4">
+              Data
+            </TableHead>
+            <TableHead className="text-center text-gray-500 p-4">
+              Categoria
+            </TableHead>
+            <TableHead className="text-center text-gray-500 p-4">
+              Tipo
+            </TableHead>
+            <TableHead className="text-right text-gray-500 p-4">
+              Valor
+            </TableHead>
+            <TableHead className="text-right text-gray-500 p-4">
+              Ações
+            </TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {transactions.map((transaction) => {
             const type = getTypeStyle(transaction.type)
-            const Icon = transaction.icon
+
+            const Icon =
+              iconMap.get(transaction.category?.icon ?? "") ?? X
+
+            const color =
+              colorMap[transaction.category?.color ?? "blue"] ??
+              colorMap.blue
+
             const TypeIcon = type.icon
 
             return (
-              <TableRow className="hover:bg-white" key={transaction.id}>
+              <TableRow
+                className="hover:bg-white"
+                key={transaction.id}
+              >
+                {/* Descrição */}
                 <TableCell>
                   <div className="flex items-center gap-3 py-2 px-2">
-                    <div className="p-2 rounded-md bg-muted">
-                      <Icon className="w-4 h-4" />
+                    <div className={`p-2 rounded-md ${color.iconBg}`}>
+                      <Icon className={`w-4 h-4 ${color.icon}`} />
                     </div>
 
                     <span className="font-medium">
@@ -149,30 +196,39 @@ export function TransactionsTable() {
                   </div>
                 </TableCell>
 
-                <TableCell className="text-center text-gray-600">{transaction.selectedDate}</TableCell>
+                {/* Data */}
+                <TableCell className="text-center text-gray-600">
+                  {formatDateToDDMMYYYY(transaction.selectedDate)}
+                </TableCell>
 
+                {/* Categoria */}
                 <TableCell className="text-center">
-                  <Badge variant="secondary">
-                    {transaction.category}
+                  <Badge
+                    className={`${color.bg} ${color.text} rounded-2xl`}
+                  >
+                    {transaction.category?.title}
                   </Badge>
                 </TableCell>
 
+                {/* Tipo */}
                 <TableCell className="text-center">
-                    <div className={`inline-flex items-center gap-2 ${type.className}`}>
-                        <TypeIcon className="w-4 h-4" />
-                        {type.label}
-                    </div>
+                  <div
+                    className={`inline-flex items-center gap-2 ${type.className}`}
+                  >
+                    <TypeIcon className="w-4 h-4" />
+                    {type.label}
+                  </div>
                 </TableCell>
 
-                <TableCell
-                  className='text-right font-medium'
-                >
+                {/* Valor */}
+                <TableCell className="text-right font-medium">
                   {transaction.value.toLocaleString("pt-BR", {
                     style: "currency",
                     currency: "BRL",
                   })}
                 </TableCell>
 
+                {/* Ações */}
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
                     <Button size="icon" variant="outline">
@@ -188,13 +244,12 @@ export function TransactionsTable() {
             )
           })}
         </TableBody>
+
         <TableFooter>
           <TableRow className="bg-white hover:bg-white">
             <TableCell colSpan={6}>
               <div className="py-2 px-2 flex items-center justify-between w-full text-gray-700">
-                <p>
-                  1 a 10 | 27 resultados
-                </p>
+                <p>1 a 10 | 27 resultados</p>
 
                 <div className="flex justify-end gap-2">
                   <Button size="icon" variant="outline">

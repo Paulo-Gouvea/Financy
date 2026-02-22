@@ -4,6 +4,8 @@ import { TransactionsTable } from "./components/TransactionsTable";
 import { useState } from "react";
 import type { Transaction } from "@/types";
 import { CreateTransactionModal } from "./components/CreateTransactionModel";
+import { FILTER_TRANSACTIONS } from "@/lib/graphql/queries/transactions";
+import { useQuery } from "@apollo/client/react";
 
 export function Transaction(){
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,6 +16,22 @@ export function Transaction(){
     const [newTransactionCategory, setNewTransactionCategory] = useState('')
     //const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
     //const [isUpdatedModalOpen, setIsUpdatedModalOpen] = useState(false)
+
+    const { data: transactionsData } = useQuery<{
+    filterTransactions: {
+        transactions: Transaction[]
+        totalOfTransactions: number
+        page: number
+        perPage: number
+        totalPages: number
+        hasNextPage: boolean
+        hasPreviousPage: boolean
+    }
+    }>(FILTER_TRANSACTIONS, {
+    variables: { data: {} }
+    });
+
+    const transactions = transactionsData?.filterTransactions.transactions || [];
 
     const handleOpenModal = () => {
         setIsModalOpen(true)
@@ -50,7 +68,7 @@ export function Transaction(){
             />
 
             <TransactionsTable 
-            
+                transactions={transactions}
             />
         </>
     )
