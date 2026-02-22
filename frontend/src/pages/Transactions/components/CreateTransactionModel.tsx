@@ -23,8 +23,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { LIST_CATEGORIES } from "@/lib/graphql/queries/categories"
 import type { Category } from "@/types"
-import { useQuery } from "@apollo/client/react"
+import { useMutation, useQuery } from "@apollo/client/react"
 import { DesiredIcon } from "@/components/DesiredIcon"
+import { CREATE_TRANSACTION } from "@/lib/graphql/mutations/transaction"
+import { toast } from "sonner"
 
 interface ModalProps {
   open: boolean
@@ -36,7 +38,7 @@ interface ModalProps {
   transactionValue: number
   transactionCategory: string
   setOpen: (open: boolean) => void
-  setTransactionType?: (type: string) => void
+  setTransactionType: (type: string) => void
   setTransactionDescription: (value: string) => void
   setTransactionSelectedDate: (value: Date | undefined) => void
   setTransactionValue: (value: number) => void
@@ -69,19 +71,38 @@ export function CreateTransactionModal({
 
     }, [])
 
+      const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
+            onCompleted(){
+                toast.success("Transação criada com sucesso")
+
+                setTransactionType('')
+                setTransactionDescription('')
+                setTransactionSelectedDate(undefined)
+                setTransactionValue(0) 
+                setTransactionCategory('')
+
+                setOpen(false) 
+            },
+            onError(error) {
+                toast.error(error.message)
+            }
+        })
+
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault() 
 
-    const data = {
-        transactionType,
-        transactionDescription,
-        transactionSelectedDate,
-        transactionValue,
-        transactionCategory
-    }
-
-    console.log('data ===> ' +JSON.stringify(data))
+    createTransaction({
+      variables: {
+        data: {
+            type: transactionType,
+            description: transactionDescription,
+            value: transactionValue,
+            selectedDate: transactionSelectedDate,
+            categoryId: transactionCategory
+        }
+      }
+    })
   }
 
   return (
@@ -188,7 +209,7 @@ export function CreateTransactionModal({
           </FieldGroup>
 
           <DialogFooter className="mt-6">
-            <Button type="submit" className="w-full" /*disabled={loading} */>
+            <Button type="submit" className="w-full" disabled={loading}>
               Salvar
             </Button>
           </DialogFooter>
