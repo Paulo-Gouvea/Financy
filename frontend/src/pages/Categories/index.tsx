@@ -37,7 +37,7 @@ export function Categories(){
         deleteCategoryId: string,
     }
 
-    const [delecteCategoryMutation] = useMutation<
+    const [deleteCategoryMutation] = useMutation<
         DeleteCategoryMutationData,
         DeleteCategoryVariables
     >(DELETE_CATEGORY, {
@@ -67,7 +67,7 @@ export function Categories(){
 
     const handleDeleteCategory = async (categoryId: string) => {
         try {
-            await delecteCategoryMutation({
+            await deleteCategoryMutation({
                 variables: {
                     deleteCategoryId: categoryId
                 }

@@ -4,7 +4,7 @@
 - [X]  O usuário pode ser capaz de alterar o seu nome 
 - [ ]  O usuário pode ver e gerenciar apenas as categorias e transações criadas por ele
 - [X]  Deve ser possível criar uma transação
-- [ ]  Deve ser possível deletar uma transação
+- [X]  Deve ser possível deletar uma transação
 - [ ]  Deve ser possível editar uma transação
 - [X]  Deve ser possível listar todas as transações
 - [X]  Deve ser possível listar todas as transações de um usuário especifico

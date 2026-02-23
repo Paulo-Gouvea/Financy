@@ -5,7 +5,9 @@ import { useState } from "react";
 import type { Transaction } from "@/types";
 import { CreateTransactionModal } from "./components/CreateTransactionModel";
 import { FILTER_TRANSACTIONS } from "@/lib/graphql/queries/transactions";
-import { useQuery } from "@apollo/client/react";
+import { useMutation, useQuery } from "@apollo/client/react";
+import { DELETE_TRANSACTION } from "@/lib/graphql/mutations/transaction";
+import { toast } from "sonner";
 
 export function Transaction(){
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +37,25 @@ export function Transaction(){
     variables: { data: {} }
     });
 
+    type DeleteTransactionMutationData = { deleteTransaction: boolean }
+        type DeleteTransactionVariables = {
+            deleteTransactionId: string,
+        }
+    
+        const [delecteTransactionMutation] = useMutation<
+            DeleteTransactionMutationData,
+            DeleteTransactionVariables
+        >(DELETE_TRANSACTION, {
+            onCompleted: (res: DeleteTransactionMutationData) => {
+                const deletedCategoryResponse = res.deleteTransaction
+                console.log(deletedCategoryResponse)
+            },
+            refetchQueries: [
+                { query: FILTER_TRANSACTIONS, variables: {data: {}} },
+            ],
+            awaitRefetchQueries: true
+        })
+
     console.log('transactionsData?.filterTransactions ===> ' +JSON.stringify(transactionsData?.filterTransactions))
 
     const transactions = transactionsData?.filterTransactions.transactions || [];
@@ -62,6 +83,20 @@ export function Transaction(){
         });
     };
 
+    const handleDeleteTransaction = async (transactionId: string) => {
+        try {
+            await delecteTransactionMutation({
+                variables: {
+                    deleteTransactionId: transactionId
+                }
+            })
+
+            toast.success("Transação excluida com sucesso!")
+        } catch (error) {
+            toast.error("Erro ao excluir a transação!")
+            console.log(error)
+        } 
+    }
 
     return (
         <>
@@ -102,6 +137,7 @@ export function Transaction(){
                 hasNextPage={hasNextPage}
                 onChangePage={handleChangePage}
                 totalPages={totalPages}
+                onDelete={handleDeleteTransaction}
             />
         </>
     )

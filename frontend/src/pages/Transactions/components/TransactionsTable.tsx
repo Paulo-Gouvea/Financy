@@ -49,6 +49,7 @@ interface TransactionsTableProps {
   hasNextPage: boolean
   totalPages: number
   onChangePage: (page: number) => void
+  onDelete: (id: string) => void
 }
 
 const iconMap = new Map<string, React.ElementType>([
@@ -231,7 +232,8 @@ export function TransactionsTable({
   totalPages,
   hasPreviousPage,
   hasNextPage,
-  onChangePage
+  onChangePage,
+  onDelete
 }: TransactionsTableProps) {
   return (
     <Card className="mt-7 overflow-hidden">
@@ -339,7 +341,7 @@ export function TransactionsTable({
                 {/* Ações */}
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Button size="icon" className="shadow:none border border-gray-300 hover: bg-white">
+                    <Button size="icon" onClick={() => onDelete(transaction.id)} className="shadow:none border border-gray-300 hover: bg-white">
                       <Trash className="w-4 h-4 text-red-500 hover: bg-white" />
                     </Button>
 
