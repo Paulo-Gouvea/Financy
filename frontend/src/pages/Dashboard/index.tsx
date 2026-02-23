@@ -6,8 +6,17 @@ import { FILTER_TRANSACTIONS, GET_TOTAL_INCOME_FROM_CURRENT_MONTH, GET_TOTAL_OUT
 import { useQuery } from "@apollo/client/react";
 import type { Category, Transaction } from "@/types";
 import { LIST_CATEGORIES } from "@/lib/graphql/queries/categories";
+import { CreateTransactionModal } from "../Transactions/components/CreateTransactionModel";
+import { useState } from "react";
 
 export function Dashboard () {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newTransactionType, setNewTransactionType] = useState('OUTCOME')
+    const [newTransactionDescription, setNewTransactionDescription] = useState('')
+    const [newTransactionSelectedDate, setNewTransactionSelectedDate] = useState<Date | undefined>(undefined)
+    const [newTransactionValue, setNewTransactionValue] = useState(0)
+    const [newTransactionCategory, setNewTransactionCategory] = useState('')
+
     const { data: totalValueData } = useQuery<{getTotalValue: number }>(GET_TOTAL_VALUE)
     const { data: totalIncomeData } = useQuery<{getTotalIncomeFromCurrentMonth: number }>(GET_TOTAL_INCOME_FROM_CURRENT_MONTH)
     const { data: totalOutcomeData } = useQuery<{getTotalIncomeOutcomeFromCurrentMonth: number }>(GET_TOTAL_OUTCOME_FROM_CURRENT_MONTH)
@@ -24,10 +33,6 @@ export function Dashboard () {
 
     const categories = categoriesData?.listCategoriesFromOwner || []
     const negativeCategoriesList = categories.filter((category) => category.balance < 0)
-    console.log(negativeCategoriesList)
-
-    console.log('categories => ' +JSON.stringify(categories))
-    console.log('negativeCategoriesList ' +JSON.stringify(negativeCategoriesList));
 
     const { data: transactionsData, refetch: filterTransactionRefetch } = useQuery<{
         filterTransactions: {
@@ -44,6 +49,10 @@ export function Dashboard () {
     });
 
     const reducedTransactionsList = transactionsData ? transactionsData?.filterTransactions.transactions.slice(0, 5) : [];
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
 
     return (
         <>
@@ -77,12 +86,30 @@ export function Dashboard () {
             <div className="mt-8 grid grid-cols-3 gap-32 col-span-2">
                 <DashboardTransactionsTable
                     transactions={reducedTransactionsList}
+                    onClick={handleOpenModal}
                 />
 
                 <DashboardCategoriesTable 
                     categories={negativeCategoriesList}
                 />
             </div>
+
+            <CreateTransactionModal 
+                open={isModalOpen}
+                setOpen={setIsModalOpen}
+                title="Nova Transação"
+                description="Registre sua despesa ou receita"
+                transactionType={newTransactionType}
+                setTransactionType={setNewTransactionType}
+                transactionDescription={newTransactionDescription}
+                setTransactionDescription={setNewTransactionDescription}
+                transactionSelectedDate={newTransactionSelectedDate}
+                setTransactionSelectedDate={setNewTransactionSelectedDate}
+                transactionValue={newTransactionValue}
+                setTransactionValue={setNewTransactionValue}
+                transactionCategory={newTransactionCategory}
+                setTransactionCategory={setNewTransactionCategory}
+            />
         </>
     )
 }

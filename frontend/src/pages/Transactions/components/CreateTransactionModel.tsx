@@ -27,7 +27,7 @@ import { useMutation, useQuery } from "@apollo/client/react"
 import { DesiredIcon } from "@/components/DesiredIcon"
 import { CREATE_TRANSACTION } from "@/lib/graphql/mutations/transaction"
 import { toast } from "sonner"
-import { FILTER_TRANSACTIONS } from "@/lib/graphql/queries/transactions"
+import { FILTER_TRANSACTIONS, GET_TOTAL_INCOME_FROM_CURRENT_MONTH, GET_TOTAL_OUTCOME_FROM_CURRENT_MONTH } from "@/lib/graphql/queries/transactions"
 
 interface ModalProps {
   open: boolean
@@ -89,6 +89,9 @@ export function CreateTransactionModal({
             },
             refetchQueries: [
                 { query: FILTER_TRANSACTIONS, variables: { data: {} } },
+                { query: GET_TOTAL_INCOME_FROM_CURRENT_MONTH },
+                { query: GET_TOTAL_OUTCOME_FROM_CURRENT_MONTH },
+                { query: LIST_CATEGORIES }
               ],
             awaitRefetchQueries: true
         })

@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 interface DashboardTransactionsTableProps {
   transactions: Transaction[]
+  onClick: () => void
 }
 
 const iconMap = new Map<string, React.ElementType>([
@@ -93,7 +94,8 @@ function formatDateToDDMMYYYY(d: Date) {
 }
 
 export function DashboardTransactionsTable({
-  transactions
+  transactions,
+  onClick
 }: DashboardTransactionsTableProps) {
   return (
     <Card className="p-0 overflow-hidden col-span-2 ">
@@ -165,7 +167,7 @@ export function DashboardTransactionsTable({
         <TableFooter>
           <TableRow className="bg-white hover:bg-white">
             <TableCell colSpan={3}>
-              <button className="w-full flex items-center justify-center gap-2 py-2 text-green-600 font-medium" onClick={() => console.log('teste2 teste2')}>
+              <button className="w-full flex items-center justify-center gap-2 py-2 text-green-600 font-medium" onClick={onClick}>
                 <Plus className="w-4 h-4" />
                 Nova transação
               </button>

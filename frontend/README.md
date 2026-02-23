@@ -15,7 +15,7 @@
 - [X]  Deve ser possível listar todas as categorias de um usuário especifico
 
 ## Funcionalidades para o front-end
-# Tela Dashboard
+# Tela Dashboard   FINALIZADA
 
 - [x]  Deve ser apresentado o saldo total do usuário
 - [x]  Deve ser apresentado a receita do mês do usuário
@@ -33,7 +33,7 @@
 - [X]  Deve ser apresentado uma tabela com as transações ordenadas pela selectedDate. Deve permitir paginação
 - [X]  Deve ser apresentado o total das transações coletadas no filtro 
 
-# Tela Categorias
+# Tela Categorias      FINALIZADA
 - [X]  Deve ser possivel mostrar o total de categorias
 - [X]  Deve ser possivel mostrar o total de transações
 - [X]  Deve ser possivel mostrar a categoria com mais transações
@@ -51,7 +51,7 @@ Essa aplicação possui:
 - [ ] 6 páginas 
 - [ ] dois modais com os formulários (Dialog):
 
-[ ] A página raiz (`/`) que exibe:
+[X] A página raiz (`/`) que exibe:
 [X] Tela de login caso o usuário esteja deslogado
 [X] Tela dashboard caso usuário esteja logado
 
