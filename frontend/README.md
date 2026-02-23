@@ -17,9 +17,9 @@
 ## Funcionalidades para o front-end
 # Tela Dashboard
 
-- [ ]  Deve ser apresentado o saldo total do usuário
-- [ ]  Deve ser apresentado a receita do mês do usuário
-- [ ]  Deve ser apresentado a despesa do mês do usuário
+- [x]  Deve ser apresentado o saldo total do usuário
+- [x]  Deve ser apresentado a receita do mês do usuário
+- [x]  Deve ser apresentado a despesa do mês do usuário
 - [ ]  Deve ser apresentado as 5 transações mais recentes (pelo SelectedDate) na pagina inicial  (POSSO USAR O FILTERTRANSACTIONS MAS LIMITANDO NOS 5 PRIMEIROS REGISTROS!)
 - [ ]  Deve ser possivel falar qual o saldo total de uma categoria
 - [ ]  Deve ser possivel falar a quantidade de transações de cada categoria

@@ -55,3 +55,21 @@ export const FILTER_TRANSACTIONS = gql`
   }
 }
 `
+
+export const GET_TOTAL_VALUE = gql`
+    query GetTotalValue {
+        getTotalValue
+    }
+`
+
+export const GET_TOTAL_OUTCOME_FROM_CURRENT_MONTH = gql`
+    query {
+        getTotalIncomeOutcomeFromCurrentMonth
+    }
+`
+
+export const GET_TOTAL_INCOME_FROM_CURRENT_MONTH = gql`
+    query {
+        getTotalIncomeFromCurrentMonth
+    }
+`

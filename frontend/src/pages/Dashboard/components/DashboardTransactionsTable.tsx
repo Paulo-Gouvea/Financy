@@ -8,47 +8,93 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
-import { ChevronRight, CircleArrowDown, CircleArrowUp, Plus } from "lucide-react";
+import type { Transaction } from "@/types";
+import { X, BaggageClaim, BookOpen, BriefcaseBusiness, CarFront, ChevronRight, CircleArrowDown, CircleArrowUp, Dumbbell, ForkKnife, Gift, HeartPulse, House, Mailbox, PawPrint, PiggyBank, Plus, ReceiptText, ShoppingCart, Ticket, ToolCase } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const transactions = [
-  {
-    title: "Pagamento de Salário",
-    date: "01/12/25",
-    category: "Receita",
-    value: 4250,
-    type: "income",
-  },
-  {
-    title: "Jantar no Restaurante",
-    date: "30/11/25",
-    category: "Alimentação",
-    value: -89.5,
-    type: "expense",
-  },
-  {
-    title: "Posto de Gasolina",
-    date: "29/11/25",
-    category: "Transporte",
-    value: -100,
-    type: "expense",
-  },
-  {
-    title: "Compras no Mercado",
-    date: "28/11/25",
-    category: "Mercado",
-    value: -156.8,
-    type: "expense",
-  },
-  {
-    title: "Retorno de Investimento",
-    date: "26/11/25",
-    category: "Investimento",
-    value: 340.25,
-    type: "income",
-  },
-];
+interface DashboardTransactionsTableProps {
+  transactions: Transaction[]
+}
 
-export function DashboardTransactionsTable() {
+const iconMap = new Map<string, React.ElementType>([
+  ["BriefcaseBusiness", BriefcaseBusiness],
+  ["CarFront", CarFront],
+  ["HeartPulse", HeartPulse],
+  ["PiggyBank", PiggyBank],
+  ["ShoppingCart", ShoppingCart],
+  ["Ticket", Ticket],
+  ["ToolCase", ToolCase],
+  ["ForkKnife", ForkKnife],
+  ["PawPrint", PawPrint],
+  ["House", House],
+  ["Gift", Gift],
+  ["Dumbbell", Dumbbell],
+  ["BookOpen", BookOpen],
+  ["BaggageClaim", BaggageClaim],
+  ["Mailbox", Mailbox],
+  ["ReceiptText", ReceiptText],
+])
+
+const colorMap: Record<
+  string,
+  { bg: string; text: string; icon: string; iconBg: string }
+> = {
+  green: {
+    bg: "bg-green-200",
+    text: "text-green-600",
+    icon: "text-green-600",
+    iconBg: "bg-green-100",
+  },
+  blue: {
+    bg: "bg-blue-200",
+    text: "text-blue-600",
+    icon: "text-blue-600",
+    iconBg: "bg-blue-100",
+  },
+  purple: {
+    bg: "bg-purple-200",
+    text: "text-purple-600",
+    icon: "text-purple-600",
+    iconBg: "bg-purple-100",
+  },
+  pink: {
+    bg: "bg-pink-200",
+    text: "text-pink-600",
+    icon: "text-pink-600",
+    iconBg: "bg-pink-100",
+  },
+  red: {
+    bg: "bg-red-200",
+    text: "text-red-600",
+    icon: "text-red-600",
+    iconBg: "bg-red-100",
+  },
+  orange: {
+    bg: "bg-orange-200",
+    text: "text-orange-600",
+    icon: "text-orange-600",
+    iconBg: "bg-orange-100",
+  },
+  yellow: {
+    bg: "bg-yellow-200",
+    text: "text-yellow-600",
+    icon: "text-yellow-600",
+    iconBg: "bg-yellow-100",
+  },
+}
+
+function formatDateToDDMMYYYY(d: Date) {
+  const date = new Date(d);
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); 
+  const year = date.getUTCFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
+export function DashboardTransactionsTable({
+  transactions
+}: DashboardTransactionsTableProps) {
   return (
     <Card className="p-0 overflow-hidden col-span-2 ">
       <Table>
@@ -59,36 +105,40 @@ export function DashboardTransactionsTable() {
             </TableHead>
             <TableHead />
             <TableHead >
-              <div className="flex text-right items-center mr-3 justify-end text-green-600 cursor-pointer" onClick={() => console.log('teste teste')}>
+              <Link to="/transactions" className="flex text-right items-center mr-3 justify-end text-green-600 cursor-pointer" onClick={() => console.log('teste teste')}>
                 <p className="text-xs">Ver todas</p>
                 <ChevronRight className="text-green-600 w-5 h-5" />
-              </div>
+              </Link>
             </TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {transactions.map((t, i) => {
-            const isIncome = t.type === "income";
+          {transactions.map((transaction) => {
+            const isIncome = transaction.type === "INCOME";
+            const Icon =iconMap.get(transaction.category?.icon ?? "") ?? X
+            const color =
+              colorMap[transaction.category?.color ?? "blue"] ??
+              colorMap.blue
 
             return (
-              <TableRow key={i}>
+              <TableRow key={transaction.id}>
                 <TableCell className="py-5 px-7">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-                      $
+                    <div className={`w-10 h-10 rounded-lg ${color.iconBg} flex items-center justify-center`}>
+                      <Icon className={`w-4 h-4 ${color.icon}`} />
                     </div>
 
                     <div>
-                      <p className="font-medium text-gray-900">{t.title}</p>
-                      <p className="text-sm text-gray-500">{t.date}</p>
+                      <p className="font-medium text-gray-900">{transaction.description}</p>
+                      <p className="text-sm text-gray-500">{formatDateToDDMMYYYY(transaction.selectedDate)}</p>
                     </div>
                   </div>
                 </TableCell>
 
                 <TableCell>
-                  <span className="ml-32 px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
-                    {t.category}
+                  <span className={`ml-32 px-3 py-1 rounded-full text-sm ${color.iconBg} ${color.icon}`}>
+                    {transaction.category?.title}
                   </span>
                 </TableCell>
 
@@ -97,7 +147,7 @@ export function DashboardTransactionsTable() {
                     <span
                     >
                       {isIncome ? "+" : "-"} R${" "}
-                      {Math.abs(t.value).toFixed(2)}
+                      {Math.abs(transaction.value).toFixed(2)}
                     </span>
 
                     {isIncome ? (
