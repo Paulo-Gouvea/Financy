@@ -22,7 +22,7 @@ export function Transaction(){
     const [descriptionInput, setDescriptionInput] = useState('')
     const [typeInput, setTypeInput] = useState('')
     const [categoryInput, setCategoryInput] = useState('')
-    const [periodInput, setPeriodInput] = useState<Date | null>(null)
+    const [periodInput, setPeriodInput] = useState<Date | undefined>(undefined)
 
     const { data: transactionsData, refetch: filterTransactionRefetch } = useQuery<{
     filterTransactions: {
@@ -157,7 +157,14 @@ export function Transaction(){
             />
 
             <TransactionsFilter 
-
+                description={descriptionInput}
+                setDescription={setDescriptionInput}
+                type={typeInput}
+                setType={setTypeInput}
+                category={categoryInput}
+                setCategory={setCategoryInput}
+                selectedDate={periodInput}
+                setSelectedDate={setPeriodInput}
             />
 
             <TransactionsTable 
