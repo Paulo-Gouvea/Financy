@@ -1,15 +1,72 @@
-Para executar o projeto:
--> Clone o repositorio
--> Entre na pasta de Backend
--> Preencha as variaveis ambiente 
--> execute npm install
--> execute npx prisma generate
--> execute npm run dev
--> Entre na pagina de frontend
--> Preencha as variaveis ambiente
--> execute npm install
--> execute npm run dev
+# 🚀 Como Executar o Projeto
 
-Deveria funcionar a aplicação. Caso sejam encontrados problemas, por favor informar!
+Siga os passos abaixo para executar a aplicação corretamente:
 
-Agradeço pelo exercicio, pelos conhecimentos passados e  pela oportunidade! Espero ter mais tempo para realizar melhoras na aplicação =)
+## 🔧 Backend
+
+1. Clone o repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   ```
+
+2. Acesse a pasta do backend:
+   ```bash
+   cd Backend
+   ```
+
+3. Preencha as variáveis de ambiente:
+   - Crie um arquivo `.env`
+   - Configure as variáveis necessárias
+
+4. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+5. Gere o Prisma Client:
+   ```bash
+   npx prisma generate
+   ```
+
+6. Execute o servidor:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 💻 Frontend
+
+1. Acesse a pasta do frontend:
+   ```bash
+   cd Frontend
+   ```
+
+2. Preencha as variáveis de ambiente:
+   - Crie um arquivo `.env`
+   - Configure as variáveis necessárias
+
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+4. Execute a aplicação:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## ✅ Observações
+
+Se todos os passos forem seguidos corretamente, a aplicação deverá funcionar normalmente.
+
+Caso sejam encontrados problemas, por favor, informe.
+
+---
+
+## 🙏 Agradecimento
+
+Agradeço pelo exercício, pelos conhecimentos compartilhados e pela oportunidade!  
+Espero ter mais tempo futuramente para implementar melhorias na aplicação 😊
