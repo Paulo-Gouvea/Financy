@@ -35,7 +35,13 @@ export function Transaction(){
         hasPreviousPage: boolean
     }
     }>(FILTER_TRANSACTIONS, {
-    variables: { data: {} }
+    variables: { data: {
+        description: "",
+        type: "",
+        categoryId: "",
+        selectedDate: null,
+        page: 1
+    } }
     });
 
     type DeleteTransactionMutationData = { deleteTransaction: boolean }
@@ -72,17 +78,28 @@ export function Transaction(){
     }
 
     const handleChangePage = (newPage: number) => {
-
         filterTransactionRefetch({
             data: {
                 description: descriptionInput,
-                type: typeInput,
-                categoryId: categoryInput,
-                selectedDate: periodInput,
+                type: typeInput === "todas" ? "" : typeInput,
+                categoryId: categoryInput === "todas" ? "" : categoryInput,
+                selectedDate: periodInput ?? null,
                 page: newPage
             }
         });
     };
+
+    const handleSearch = () => {
+    filterTransactionRefetch({
+        data: {
+            description: descriptionInput,
+            type: typeInput === "todas" ? "" : typeInput,
+            categoryId: categoryInput === "todas" ? "" : categoryInput,
+            selectedDate: periodInput ?? null,
+            page: 1
+        }
+    });
+};
 
     const handleOpenUpdateModal = (transaction: Transaction) => {
         setSelectedTransaction(transaction);
@@ -159,12 +176,10 @@ export function Transaction(){
             <TransactionsFilter 
                 description={descriptionInput}
                 setDescription={setDescriptionInput}
-                type={typeInput}
                 setType={setTypeInput}
-                category={categoryInput}
                 setCategory={setCategoryInput}
-                selectedDate={periodInput}
                 setSelectedDate={setPeriodInput}
+                onSearch={handleSearch}
             />
 
             <TransactionsTable 

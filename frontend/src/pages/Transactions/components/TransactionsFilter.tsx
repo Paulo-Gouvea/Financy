@@ -12,12 +12,10 @@ import { LIST_TRANSACTIONS } from "@/lib/graphql/queries/transactions";
 interface TransactionsFilterProps {
     description: string
     setDescription: (value: string) => void
-    type: string
     setType: (value: string) => void
-    category: string
     setCategory: (value: string) => void
-    selectedDate: Date | undefined
     setSelectedDate: (value: Date | undefined) => void
+    onSearch: () => void
 }
 
 function formatDateToDDMMYYYY(d: Date) {
@@ -32,12 +30,10 @@ function formatDateToDDMMYYYY(d: Date) {
 export function TransactionsFilter({
     description,
     setDescription,
-    type,
     setType,
-    category,
     setCategory,
-    selectedDate,
-    setSelectedDate
+    setSelectedDate,
+    onSearch
 }: TransactionsFilterProps) {
     const { data: categoriesData } = useQuery<{listCategoriesFromOwner: Category[] }>(LIST_CATEGORIES)
     const { data: transactionsData } = useQuery<{listTransactionsFromOwner: Transaction[] }>(LIST_TRANSACTIONS)
@@ -57,10 +53,7 @@ export function TransactionsFilter({
     );
 
     const handleFilterTransactions = () => {
-        console.log("description => " +description)
-        console.log("type => " +type)
-        console.log("category => " +category)
-        console.log("selectedDate => " +selectedDate)
+        onSearch()
     }
 
     return(

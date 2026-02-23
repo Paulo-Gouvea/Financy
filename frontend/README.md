@@ -26,10 +26,10 @@
 - [x]  Deve ser possivel apresentar na tela inicial uma lista com 5 categorias com saldo negativo (PODEMOS FAZER UMA LISTA DOS BALANCES NEGATIVOS USANDO A FUNÇÃO QUE APRESENTA OS SALDOS DAS CATEGORIAS!)
 
 # Tela Transações
-- [ ]  Deve ser possivel fazer uma filtragem pela descrição da transação
-- [ ]  Deve ser possivel fazer uma filtragem pelo tipo da transação
-- [ ]  Deve ser possível fazer uma filtragem pela categoria da transação
-- [ ]  Deve ser possível fazer uma filtragem pelo período da transação
+- [x]  Deve ser possivel fazer uma filtragem pela descrição da transação
+- [x]  Deve ser possivel fazer uma filtragem pelo tipo da transação
+- [x]  Deve ser possível fazer uma filtragem pela categoria da transação
+- [x]  Deve ser possível fazer uma filtragem pelo período da transação
 - [X]  Deve ser apresentado uma tabela com as transações ordenadas pela selectedDate. Deve permitir paginação
 - [X]  Deve ser apresentado o total das transações coletadas no filtro 
 
@@ -43,13 +43,13 @@
 Além disso, também temos algumas regras importantes específicas para o front-end:
 
 - [X]  É obrigatória a criação de uma aplicação React usando GraphQL para consultas na API e Vite como `bundler`;
-- [ ]  Siga o mais fielmente possível o layout do Figma;
+- [x]  Siga o mais fielmente possível o layout do Figma;
 
 ## Páginas
 
 Essa aplicação possui: 
-- [ ] 6 páginas 
-- [ ] dois modais com os formulários (Dialog):
+- [x] 6 páginas 
+- [x] dois modais com os formulários (Dialog):
 
 [X] A página raiz (`/`) que exibe:
 [X] Tela de login caso o usuário esteja deslogado
