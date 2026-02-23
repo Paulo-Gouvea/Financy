@@ -20,10 +20,10 @@
 - [x]  Deve ser apresentado o saldo total do usuário
 - [x]  Deve ser apresentado a receita do mês do usuário
 - [x]  Deve ser apresentado a despesa do mês do usuário
-- [ ]  Deve ser apresentado as 5 transações mais recentes (pelo SelectedDate) na pagina inicial  (POSSO USAR O FILTERTRANSACTIONS MAS LIMITANDO NOS 5 PRIMEIROS REGISTROS!)
-- [ ]  Deve ser possivel falar qual o saldo total de uma categoria
-- [ ]  Deve ser possivel falar a quantidade de transações de cada categoria
-- [ ]  Deve ser possivel apresentar na tela inicial uma lista com 5 categorias com saldo negativo (PODEMOS FAZER UMA LISTA DOS BALANCES NEGATIVOS USANDO A FUNÇÃO QUE APRESENTA OS SALDOS DAS CATEGORIAS!)
+- [x]  Deve ser apresentado as 5 transações mais recentes (pelo SelectedDate) na pagina inicial  (POSSO USAR O FILTERTRANSACTIONS MAS LIMITANDO NOS 5 PRIMEIROS REGISTROS!)
+- [x]  Deve ser possivel falar qual o saldo total de uma categoria
+- [x]  Deve ser possivel falar a quantidade de transações de cada categoria
+- [x]  Deve ser possivel apresentar na tela inicial uma lista com 5 categorias com saldo negativo (PODEMOS FAZER UMA LISTA DOS BALANCES NEGATIVOS USANDO A FUNÇÃO QUE APRESENTA OS SALDOS DAS CATEGORIAS!)
 
 # Tela Transações
 - [ ]  Deve ser possivel fazer uma filtragem pela descrição da transação
@@ -68,7 +68,7 @@ Essa aplicação possui:
 
 Todo projeto tem diversas configurações de variáveis que devem ser diferentes de acordo com o ambiente que ele é executado. Para isso, importante sabermos, de forma fácil e intuitiva, quais variáveis são essas. Então é obrigatório que esse projeto tenha um arquivo `.env.example` com as chaves necessárias.
 
-- [ ] VITE_BACKEND_URL=
+- [x] VITE_BACKEND_URL=
 
 ## Dicas
 
