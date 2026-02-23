@@ -194,30 +194,33 @@ export class TransactionService {
         }
     }
 
-    async updateTransaction(id: string, data: UpdateTransactionInput){
-        const transaction = await prismaClient.transaction.findUnique({
-            where: {
-                id,
-            }
-        })
+async updateTransaction(id: string, data: UpdateTransactionInput) {
+  const transaction = await prismaClient.transaction.findUnique({
+    where: { id }
+  })
 
-        if(!transaction) throw new Error('Categoria não encontrada no sistema!')
+  if (!transaction) {
+    throw new Error('Transação não encontrada no sistema!')
+  }
 
-        const updatedTransaction =  await prismaClient.transaction.update({
-            where: { id },
-            data: {
-                type: data.type,
-                description: data.description,
-                selectedDate: data.selectedDate,
-                valueInCents: toCents(data.value),
-            }
-        })
-
-        return {
-            ...updatedTransaction,
-            value: fromCents(updatedTransaction.valueInCents)
-        }
+  const updatedTransaction = await prismaClient.transaction.update({
+    where: { id },
+    data: {
+      ...(data.type && { type: data.type }),
+      ...(data.description && { description: data.description }),
+      ...(data.selectedDate && { selectedDate: data.selectedDate }),
+      ...(data.categoryId && { categoryId: data.categoryId }),
+      ...(data.value !== undefined && {
+        valueInCents: toCents(data.value)
+      }),
     }
+  })
+
+  return {
+    ...updatedTransaction,
+    value: fromCents(updatedTransaction.valueInCents)
+  }
+}
 
     async deleteTransaction(id: string){
         const findTransaction = await prismaClient.transaction.findUnique({

@@ -18,40 +18,41 @@ import { Calendar } from "@/components/ui/calendar"
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useEffect } from "react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { LIST_CATEGORIES } from "@/lib/graphql/queries/categories"
-import type { Category } from "@/types"
+import type { Category, Transaction as TransactionType } from "@/types"
 import { useMutation, useQuery } from "@apollo/client/react"
 import { DesiredIcon } from "@/components/DesiredIcon"
-import { CREATE_TRANSACTION } from "@/lib/graphql/mutations/transaction"
+import { UPDATE_TRANSACTION } from "@/lib/graphql/mutations/transaction"
 import { toast } from "sonner"
-import { FILTER_TRANSACTIONS, GET_TOTAL_INCOME_FROM_CURRENT_MONTH, GET_TOTAL_OUTCOME_FROM_CURRENT_MONTH, GET_TOTAL_VALUE } from "@/lib/graphql/queries/transactions"
+import { FILTER_TRANSACTIONS } from "@/lib/graphql/queries/transactions"
+import { useEffect } from "react"
 
-interface ModalProps {
+interface UpdateTransactionModalProps {
   open: boolean
+  setOpen: (open: boolean) => void
   title: string
   description: string
   transactionType?: string
-  transactionDescription: string
-  transactionSelectedDate: Date | undefined
-  transactionValue: number
-  transactionCategory: string
-  setOpen: (open: boolean) => void
   setTransactionType: (type: string) => void
+  transactionDescription: string
   setTransactionDescription: (value: string) => void
+  transactionSelectedDate: Date | undefined
   setTransactionSelectedDate: (value: Date | undefined) => void
+  transactionValue: number
   setTransactionValue: (value: number) => void
+  transactionCategory: string
   setTransactionCategory: (value: string) => void
+  selectedTransaction: TransactionType | null
 }
 
-export function CreateTransactionModal({
+export function UpdateTransactionModal({
   open,
   setOpen,
   title,
   description,
-  transactionType = 'OUTCOME',
+  transactionType,
   transactionDescription,
   transactionSelectedDate,
   transactionValue,
@@ -60,49 +61,75 @@ export function CreateTransactionModal({
   setTransactionDescription,
   setTransactionSelectedDate,
   setTransactionCategory,
-  setTransactionValue
-}: ModalProps) {
+  setTransactionValue,
+  selectedTransaction
+}: UpdateTransactionModalProps) {
+  useEffect(() => {
+  if (!selectedTransaction) return;
+
+  console.log("selectedTransaction ==> " +JSON.stringify(selectedTransaction));
+
+  setTransactionType(selectedTransaction.type);
+  setTransactionDescription(selectedTransaction.description ?? '');
+  setTransactionSelectedDate(
+    selectedTransaction.selectedDate
+      ? new Date(selectedTransaction.selectedDate)
+      : undefined
+  );
+  setTransactionValue(selectedTransaction.value);
+  setTransactionCategory(selectedTransaction.category?.id || '');
+}, [selectedTransaction, setTransactionCategory, setTransactionDescription, setTransactionSelectedDate, setTransactionType, setTransactionValue]);
+
     const { data: categoriesData } = useQuery<{listCategoriesFromOwner: Category[] }>(LIST_CATEGORIES)
     
     const categories = categoriesData?.listCategoriesFromOwner || []
 
-    console.log('categories => ' +JSON.stringify(categories))
+    type UpdateTransactionMutationData = { updateTransaction: TransactionType }
+    type UpdateTransactionVariables = {
+        updateTransactionId: string,
+        data: {
+            type?: string,
+            description?: string,
+            value?: number,
+            selectedDate?: Date
+            categoryId: string
+        }
+    }
 
-    useEffect(() => {
+      const [updateTransactionMutation, { loading }] = useMutation<
+        UpdateTransactionMutationData,
+        UpdateTransactionVariables
+      >(UPDATE_TRANSACTION, {
+        onCompleted(res: UpdateTransactionMutationData){
+        console.log(res)
+          toast.success("Transação atualizada com sucesso")
 
-    }, [])
-
-      const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
-            onCompleted(){
-                toast.success("Transação criada com sucesso")
-
-                setTransactionType('OUTCOME')
-                setTransactionDescription('')
-                setTransactionSelectedDate(undefined)
-                setTransactionValue(0) 
-                setTransactionCategory('')
-
-                setOpen(false) 
-            },
-            onError(error) {
-                toast.error(error.message)
-            },
-            refetchQueries: [
-                { query: FILTER_TRANSACTIONS, variables: { data: {} } },
-                { query: GET_TOTAL_VALUE },
-                { query: GET_TOTAL_INCOME_FROM_CURRENT_MONTH },
-                { query: GET_TOTAL_OUTCOME_FROM_CURRENT_MONTH },
-                { query: LIST_CATEGORIES }
-              ],
-            awaitRefetchQueries: true
-        })
+          setTransactionType('OUTCOME')
+          setTransactionDescription('')
+          setTransactionSelectedDate(undefined)
+          setTransactionValue(0) 
+          setTransactionCategory('')
+    
+          setOpen(false) 
+        },
+        onError(error) {
+          toast.error(error.message)
+        },
+        refetchQueries: [
+          { query: FILTER_TRANSACTIONS, variables: { data: {} } },
+          { query: LIST_CATEGORIES }
+        ],
+        awaitRefetchQueries: true
+      })
 
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault() 
+    if (!selectedTransaction) return
 
-    createTransaction({
+    updateTransactionMutation({
       variables: {
+        updateTransactionId: selectedTransaction.id,
         data: {
             type: transactionType,
             description: transactionDescription,
@@ -198,7 +225,7 @@ export function CreateTransactionModal({
             </div>
             <Field>
                     <Label htmlFor="title">Categoria</Label>
-                    <Select onValueChange={(category) => setTransactionCategory(category)}>
+                    <Select value={transactionCategory} onValueChange={(category) => setTransactionCategory(category)}>
                         <SelectTrigger className="w-[220px] px-4 py-5">
                             <SelectValue className="text-gray-400" placeholder="Selecione" />
                         </SelectTrigger>

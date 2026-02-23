@@ -21,13 +21,13 @@ import { LIST_CATEGORIES } from "@/lib/graphql/queries/categories"
 
 interface ModalProps {
   open: boolean
+  setOpen: (open: boolean) => void
   title: string
   description: string
   categoryTitle: string
   setCategoryTitle: (value: string) => void
   categoryDescription: string
   setCategoryDescription: (value: string) => void
-  setOpen: (open: boolean) => void
   selectedIcon: string
   setSelectedIcon: (icon: string) => void
   selectedColor: string
@@ -83,7 +83,7 @@ export function UpdateCategoryModal({
     awaitRefetchQueries: true
   })
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault(); 
         if (!selectedCategory) return; 
 

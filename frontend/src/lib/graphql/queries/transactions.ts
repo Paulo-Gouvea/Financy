@@ -40,6 +40,7 @@ export const FILTER_TRANSACTIONS = gql`
       selectedDate,
       value,
       category {
+        id,
         title,
         description,
         color,

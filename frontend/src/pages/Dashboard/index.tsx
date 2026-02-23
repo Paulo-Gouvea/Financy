@@ -34,7 +34,7 @@ export function Dashboard () {
     const categories = categoriesData?.listCategoriesFromOwner || []
     const negativeCategoriesList = categories.filter((category) => category.balance < 0)
 
-    const { data: transactionsData, refetch: filterTransactionRefetch } = useQuery<{
+    const { data: transactionsData } = useQuery<{
         filterTransactions: {
             transactions: Transaction[]
             totalOfTransactions: number

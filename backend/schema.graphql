@@ -136,6 +136,7 @@ input UpdateCategoryInput {
 }
 
 input UpdateTransactionInput {
+  categoryId: String
   description: String
   selectedDate: DateTimeISO
   type: String

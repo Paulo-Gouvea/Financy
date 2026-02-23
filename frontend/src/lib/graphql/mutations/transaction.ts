@@ -27,3 +27,25 @@ export const DELETE_TRANSACTION = gql`
         deleteTransaction(id: $deleteTransactionId)
     }
 `
+
+export const UPDATE_TRANSACTION = gql`
+    mutation updateTransaction($updateTransactionId: String!, $data: UpdateTransactionInput!) {
+        updateTransaction(id: $updateTransactionId, data: $data) {
+            id
+            description
+            type
+            selectedDate
+            value
+            category {
+                id
+                title
+                description
+            }
+            owner {
+                id
+                name
+                email
+            }
+        }
+    }
+`

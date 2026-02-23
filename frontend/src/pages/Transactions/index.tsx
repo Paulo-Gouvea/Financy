@@ -8,6 +8,7 @@ import { FILTER_TRANSACTIONS } from "@/lib/graphql/queries/transactions";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { DELETE_TRANSACTION } from "@/lib/graphql/mutations/transaction";
 import { toast } from "sonner";
+import { UpdateTransactionModal } from "./components/UpdateTransactionModel";
 
 export function Transaction(){
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,8 +17,8 @@ export function Transaction(){
     const [newTransactionSelectedDate, setNewTransactionSelectedDate] = useState<Date | undefined>(undefined)
     const [newTransactionValue, setNewTransactionValue] = useState(0)
     const [newTransactionCategory, setNewTransactionCategory] = useState('')
-    //const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
-    //const [isUpdatedModalOpen, setIsUpdatedModalOpen] = useState(false)
+    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
+    const [isUpdatedModalOpen, setIsUpdatedModalOpen] = useState(false)
     const [descriptionInput, setDescriptionInput] = useState('')
     const [typeInput, setTypeInput] = useState('')
     const [categoryInput, setCategoryInput] = useState('')
@@ -83,6 +84,19 @@ export function Transaction(){
         });
     };
 
+    const handleOpenUpdateModal = (transaction: Transaction) => {
+        setSelectedTransaction(transaction);
+        setNewTransactionType(transaction.type);
+        setNewTransactionDescription(transaction.description ?? '');
+        setNewTransactionSelectedDate(
+        transaction.selectedDate
+            ? new Date(transaction.selectedDate)
+            : undefined
+        );
+        setNewTransactionValue(transaction.value)
+        setIsUpdatedModalOpen(true);
+    };
+
     const handleDeleteTransaction = async (transactionId: string) => {
         try {
             await delecteTransactionMutation({
@@ -117,6 +131,24 @@ export function Transaction(){
                 setTransactionCategory={setNewTransactionCategory}
             />
 
+            <UpdateTransactionModal 
+                open={isUpdatedModalOpen}
+                setOpen={setIsUpdatedModalOpen}
+                title="Atualizar Transação"
+                description="Atualize os detalhes da transação"
+                transactionType={newTransactionType}
+                transactionDescription={newTransactionDescription}
+                transactionSelectedDate={newTransactionSelectedDate}
+                transactionValue={newTransactionValue}
+                transactionCategory={newTransactionCategory}
+                setTransactionType={setNewTransactionType}
+                setTransactionDescription={setNewTransactionDescription}
+                setTransactionSelectedDate={setNewTransactionSelectedDate}
+                setTransactionCategory={setNewTransactionCategory}
+                setTransactionValue={setNewTransactionValue}
+                selectedTransaction={selectedTransaction}
+            />
+
             <PageDescription 
                 title="Transações"
                 description="Gerencie todas as suas transações financeiras"
@@ -138,6 +170,7 @@ export function Transaction(){
                 onChangePage={handleChangePage}
                 totalPages={totalPages}
                 onDelete={handleDeleteTransaction}
+                onEdit={handleOpenUpdateModal}
             />
         </>
     )
